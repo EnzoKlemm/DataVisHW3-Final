@@ -813,17 +813,6 @@ function clearDrilldown() {
 }
 
 // ─── ROUND FILTERS ───────────────────────────────────────────────────────────
-document.querySelectorAll('.filter-pill').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedRound = btn.dataset.round;
-    selectedCell = null;
-    clearDrilldown();
-    updateStats();
-    buildHeatmap();
-  });
-});
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 buildTimeline();
