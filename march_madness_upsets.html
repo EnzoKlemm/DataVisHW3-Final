@@ -115,8 +115,8 @@ let allYears = [];
 
 // ── LOAD CSVs THEN INIT ───────────────────────────────────────────────────────
 Promise.all([
-  d3.csv("Tournament_Matchups.csv"),
-  d3.csv("Upset_Count.csv")
+  d3.csv("Tournament Matchups.csv"),
+  d3.csv("Upset Count.csv")
 ]).then(([matchups, upsetCount]) => {
 
   UPSET_COUNT = upsetCount;
