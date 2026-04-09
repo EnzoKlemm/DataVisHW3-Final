@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>March Madness — HW3</title>
+<style>
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    background: #f4f6fa;
+    color: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 48px 52px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #e94560;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: #718096;
+    margin: 0 0 36px;
+  }
+
+  .launch-btn {
+    display: inline-block;
+    background: #1a1a2e;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    margin-bottom: 32px;
+  }
+
+  .launch-btn:hover {
+    background: #0f3460;
+  }
+
+  .files {
+    border-top: 1px solid #edf2f7;
+    padding-top: 20px;
+    text-align: left;
+  }
+
+  .files-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #a0aec0;
+    margin-bottom: 10px;
+  }
+
+  .files a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #4a5568;
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f4f8;
+  }
+
+  .files a:last-child { border-bottom: none; }
+  .files a:hover { color: #1a1a2e; }
+
+  .icon { font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">HW3 &nbsp;·&nbsp; Data Visualization</div>
+  <h1>March Madness<br>Upset Explorer</h1>
+  <p class="sub">2008–2025 &nbsp;·&nbsp; NCAA Tournament</p>
+  <a class="launch-btn" href="march_madness_upsets.html">Launch Visualization &rarr;</a>
+  <div class="files">
+    <div class="files-label">Data Files</div>
+    <a href="Tournament%20Matchups.csv"><span class="icon">📄</span> Tournament Matchups.csv</a>
+    <a href="Upset%20Count.csv"><span class="icon">📄</span> Upset Count.csv</a>
+    <a href="Upset%20Seed%20Info.csv"><span class="icon">📄</span> Upset Seed Info.csv</a>
+    <a href="Seed%20Results.csv"><span class="icon">📄</span> Seed Results.csv</a>
+  </div>
+</div>
+</body>
+</html>
