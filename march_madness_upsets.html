@@ -82,7 +82,7 @@
 <body>
 
 <header class="hero">
-  <h1>The Anatomy of the Upset</h1>
+  <h1>A Look into the Upsets</h1>
   <p class="byline">March Madness &nbsp;·&nbsp; 2008–2025 &nbsp;·&nbsp; NCAA Tournament</p>
   <p class="intro">Every March, millions of brackets are filled out — and promptly destroyed. Upsets are the lifeblood of the NCAA Tournament, turning unknowns into legends and favorites into footnotes. This is the story of who upsets whom, when, and by how much.</p>
 </header>
@@ -101,7 +101,7 @@
 <section class="page-section">
   <div class="prose">
     <h2>When do upsets happen?</h2>
-    <p>Some years feel wilder than others. In 2022 and 2023 the tournament saw 17 upsets each — bracket chaos at its peak. The pandemic-shortened 2021 bubble produced the most chalk in recent memory. Drag across the bars below to zoom into any range of years; every chart on this page will update.</p>
+    <p>It's rare that any single year goes according to anyone's plan. That might be the reason why no one has ever gotten a perfect bracket. In 2022–2023 the tournament resulted in 17 upsets. Just as an example: the pandemic-shortened bubble resulted in a shorter NCAA as well as NBA season. Drag across the bars below to zoom into any range of years; every chart on this page will update.</p>
   </div>
   <div class="viz-wrap" id="timeline-wrap"><svg id="timeline"></svg></div>
   <div class="prose"><p class="caption">Drag to filter years — all charts below update accordingly.</p></div>
@@ -110,7 +110,7 @@
 <section class="page-section">
   <div class="prose">
     <h2>Which matchups produce the most chaos?</h2>
-    <p>Not all upsets are created equal. A 5-seed losing to a 12-seed is practically a March tradition. But a 1-seed falling to a 16? That happened once in this span. The heatmap maps every seed-vs-seed upset combination. Darker cells mean more upsets. Click any cell to see the individual games.</p>
+    <p>All upsets are created differently. A 5-seed loss to a 12-seed is almost something to be expected. Though a 1-seed losing to a 16-seed? That is something that is a little more out of the ordinary. The heatmap maps every single seed-vs-seed upset combination between the years and rounds. Darker cells indicate an increased concentration of upsets. Hover over any cell to see the upset count, or click it to explore the individual games below.</p>
   </div>
   <div class="viz-wrap" id="heatmap-wrap"><svg id="heatmap"></svg></div>
   <div id="drilldown">
@@ -122,7 +122,7 @@
 <section class="page-section">
   <div class="prose">
     <h2>Which seeds are actually dangerous?</h2>
-    <p>Win percentage alone doesn’t tell the whole story. The PAKE score (Performance Above Kenpom Expectation) reveals which seeds consistently punch above their weight. A positive PAKE means a seed wins more often than their strength-of-schedule would predict — the hallmark of a dangerous underdog.</p>
+    <p>The win percentage isn't the only thing to measure. The PAKE score - denoted as Performance Above Kenpom Expectation - shows the seeds that are consistently punching above their own weight. A positive PAKE value indicates the seed is going to win more often than their strength-of-schedule would suggest. This is the hallmark of a potentially dangerous underdog.</p>
   </div>
   <div class="viz-wrap" id="seedprofile-wrap"><svg id="seed-profile"></svg></div>
   <div class="prose"><p class="caption">Bar = historical win rate. Dot = PAKE score (green = overperforms, red = underperforms vs. expectation).</p></div>
@@ -131,7 +131,7 @@
 <section class="page-section">
   <div class="prose">
     <h2>How close are these games?</h2>
-    <p>Upsets feel shocking — but are they decided by narrow margins, or do Cinderella teams sometimes blow out the favorites? The box plots compare score differentials in upset games versus expected-outcome games by round. Each box spans the middle 50% of games; the center line is the median margin.</p>
+    <p>Upsets are always shocking - though are they decided by a narrow margin or a true Cinderella story? The box plot below is going to show those differences by comparing the score differentials between the upsets versus the expected outcome games by round. Each box is spanning the middle 50% of the games; the middle line is the median.</p>
   </div>
   <div class="viz-wrap" id="margin-wrap"><svg id="margin-chart"></svg></div>
   <div class="prose"><p class="caption">Box spans 25th–75th percentile. Line = median. Whiskers extend to 1.5× IQR.</p></div>
@@ -252,7 +252,7 @@ function buildTimeline() {
     .on('mouseout',hideTip);
 
   g.append('g').attr('class','brush').call(
-    d3.brushX().extent([[0,0],[iW,iH]]).on('end', event => {
+    d3.brushX().extent([[0,0],[iW,iH]]).on('brush end', event => {
       if (!event.selection) {
         yearRange = [d3.min(allYears),d3.max(allYears)];
       } else {
