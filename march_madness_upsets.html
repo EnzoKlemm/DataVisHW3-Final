@@ -379,7 +379,7 @@ function buildMarginChart() {
   const groups = roundKeys.flatMap(r =>
     [true,false].map(isUpset => {
       const vals = games.filter(d=>d.round===r&&d.is_upset===isUpset).map(d=>d.margin).sort((a,b)=>a-b);
-      if (vals.length<3) return null;
+      if (vals.length<1) return null;
       const q1=d3.quantile(vals,.25), med=d3.quantile(vals,.5), q3=d3.quantile(vals,.75);
       const iqr=q3-q1;
       return { round:r, roundName:ROUND_NAMES[r], isUpset, q1, med, q3,
