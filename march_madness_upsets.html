@@ -83,9 +83,9 @@
 <body>
 
 <header class="hero">
-  <h1>A Look into the Upsets</h1>
+  <h1>Is There a Pattern to the Upset?</h1>
   <p class="byline">March Madness &nbsp;·&nbsp; 2008–2025 &nbsp;·&nbsp; NCAA Tournament</p>
-  <p class="intro">Every March, millions of brackets are filled out — and promptly destroyed. Upsets are the lifeblood of the NCAA Tournament, turning unknowns into legends and favorites into footnotes. This is the story of who upsets whom, when, and by how much.</p>
+  <p class="intro">Every March, millions of brackets are filled out — and promptly destroyed. We tend to call upsets chaos, but what if they aren't random at all? Across 17 years of NCAA Tournament data, a clear pattern emerges: certain eras are more upset-prone, certain seed matchups produce chaos almost on cue, and certain underdogs punch above their weight year after year. The madness has a method.</p>
 </header>
 
 <div class="sticky-bar">
@@ -101,17 +101,19 @@
 
 <section class="page-section">
   <div class="prose">
-    <h2>When do upsets happen?</h2>
-    <p>It's rare that any single year goes according to anyone's plan. That might be the reason why no one has ever gotten a perfect bracket. In 2022–2023 the tournament resulted in 17 upsets. Just as an example: the pandemic-shortened bubble resulted in a shorter NCAA as well as NBA season. Drag across the bars below to zoom into any range of years; every chart on this page will update.</p>
+    <h2>Upset frequency may not be random, it may move in eras</h2>
+    <p>If upsets were pure chance, we'd expect the count to hover around the same number every year, but they don't seem to do that. The data breaks into three distinct eras. The pre-2016 period was relatively stable with 8 to 11 upsets most years. Then came a stretch of high-chaos tournaments peaking around 2022–2023, when 14 or more upsets became the norm. The trend line makes this drift visible.</p>
+    <p>Two external forces help explain the shift. The 2021 tournament that was played in a COVID bubble with no home crowds produced a notably low upset count, likely because home-court momentum was stripped away. Then starting in 2022, the NCAA's NIL rules gave players new financial freedom to transfer freely. Mid-major programs could now recruit and retain talent that previously flowed only to powerhouses and the upset numbers reflect it.</p>
   </div>
   <div class="viz-wrap" id="timeline-wrap"><svg id="timeline"></svg></div>
-  <div class="prose"><p class="caption">Drag to filter years — all charts below update accordingly.</p></div>
+  <div class="prose"><p class="caption">Dots = upsets per year. Line = 3-year rolling trend. Drag across dots to filter all charts below by year range. Annotated years mark structural shifts in the sport.</p></div>
 </section>
 
 <section class="page-section">
   <div class="prose">
-    <h2>Which matchups produce the most chaos?</h2>
-    <p>All upsets are created differently. A 5-seed loss to a 12-seed is almost something to be expected. Though a 1-seed losing to a 16-seed? That is something that is a little more out of the ordinary. The heatmap maps every single seed-vs-seed upset combination between the years and rounds. Darker cells indicate an increased concentration of upsets. Hover over any cell to see the upset count, or click it to explore the individual games below.</p>
+    <h2>Some seed matchups are reliably dangerous</h2>
+    <p>If upsets were random, every cell in this grid would be roughly the same shade. The 12-over-5 and 11-over-6 matchups appear so frequently they're practically expected. Savvy bracket-fillers have known this for years. But the pattern runs deeper than just those famous matchups. Certain diagonal bands light up consistently, suggesting the gap between a 4-seed and a 5-seed matters far less than the gap between a 1-seed and a 2-seed.</p>
+    <p>Notice what's mostly dark: upsets involving 1-seeds are rare enough to be memorable precisely because they break this pattern. The 2018 UMBC-Virginia game stands alone, a 16-over-1, the only one in recent tournament history until FDU repeated the feat in 2023. Click any lit cell to see the individual games behind it.</p>
   </div>
   <div class="viz-wrap" id="heatmap-wrap"><svg id="heatmap"></svg></div>
   <div id="drilldown">
@@ -122,20 +124,30 @@
 
 <section class="page-section">
   <div class="prose">
-    <h2>Which seeds are actually dangerous?</h2>
-    <p>The win percentage isn't the only thing to measure. The PAKE score - denoted as Performance Above Kenpom Expectation - shows the seeds that are consistently punching above their own weight. A positive PAKE value indicates the seed is going to win more often than their strength-of-schedule would suggest. This is the hallmark of a potentially dangerous underdog.</p>
+    <h2>Certain seeds are dangerous by design, not by accident</h2>
+    <p>Win rate alone doesn't tell the full story. A 5-seed has an easier path than an 11-seed, so raw winning percentages aren't directly comparable. The PAKE score (Performance Above KenPom Expectation) controls for strength of schedule: a positive value means a seed wins <em>more often than their talent level predicts</em>. That's the mark of a structural underdog advantage, not a fluke.</p>
+    <p>Seeds 11 and 12 post the highest PAKE scores in the dataset. The leading theory for this is that these teams are typically strong mid-major programs or Power-5 bubble teams that just squeaked into the field. They're battle-tested, overlooked, and playing with nothing to lose against a 6 or 5 seed that may have coasted through a weaker conference. That combination - competitive team, low expectations, fired-up opponent — is a repeatable recipe for chaos.</p>
   </div>
   <div class="viz-wrap" id="seedprofile-wrap"><svg id="seed-profile"></svg></div>
-  <div class="prose"><p class="caption">Bar = historical win rate. Dot = PAKE score (green = overperforms, red = underperforms vs. expectation).</p></div>
+  <div class="prose"><p class="caption">Bar = historical win rate. Dot = PAKE score (green = overperforms expectations, red = underperforms). Seeds with high PAKE are the ones to watch in your bracket.</p></div>
 </section>
 
 <section class="page-section">
   <div class="prose">
-    <h2>How close are these games?</h2>
-    <p>Upsets are always shocking - though are they decided by a narrow margin or a true Cinderella story? The box plot below is going to show those differences by comparing the score differentials between the upsets versus the expected outcome games by round. Each box is spanning the middle 50% of the games; the middle line is the median.</p>
+    <h2>Upsets aren't decided by miracle margins</h2>
+    <p>One common assumption is that upsets are close games won on a last-second shot, barely surviving. The data mostly disagrees. Upset margins are slightly narrower than expected wins on average, but the difference is smaller than you'd think, particularly in the Round of 64. Many upsets are decided by 8–12 points, which looks less like a miracle and more like a team that simply matched up well.</p>
+    <p>One important caveat is this chart can overstate how dominant upsets look. A Cinderella team that wins in the first round and goes on a deep run contributes multiple games to the upset column, so sustained runs by a single team skew the data. The pattern still holds directionally, but treat the exact margins with some skepticism. The more reliable signal is in the heatmap above: which matchups produce upsets, not how wide those upsets are.</p>
   </div>
   <div class="viz-wrap" id="margin-wrap"><svg id="margin-chart"></svg></div>
-  <div class="prose"><p class="caption">Box spans 25th–75th percentile. Line = median. Whiskers extend to 1.5× IQR.</p></div>
+  <div class="prose"><p class="caption">Each dot = one game. Red = upset, blue = expected result. Horizontal lines show the median margin per round. Note: teams on deep runs contribute multiple dots, which can skew the upset column.</p></div>
+</section>
+
+<section class="page-section">
+  <div class="prose">
+    <h2>So is there a pattern?</h2>
+    <p>Yes. The data makes a clear case that NCAA Tournament upsets are not random noise. They cluster by era, by seed matchup, and by team archetype. The 12-over-5 isn't a surprise anymore, it's an expectation. Seeds 11 and 12 don't just get lucky. They structurally outperform their talent level, tournament after tournament.</p>
+    <p>What changed post-2021 seems to be very real. The transfer portal and NIL have flattened the talent gap between mid-major and Power-5 programs, and the upset numbers reflect it. The madness has a method, you just have to know where to look.</p>
+  </div>
 </section>
 
 <footer>
@@ -146,290 +158,933 @@
 <div id="tooltip"></div>
 
 <script>
-const ROUND_NAMES = {'64':'Round of 64','32':'Round of 32','16':'Sweet 16','8':'Elite 8','4':'Final Four'};
-const ROUND_ORDER = ['64','32','16','8','4'];
+// =============================================================
+// CONSTANTS
+// Round number → readable name, and the display order
+// =============================================================
+const ROUND_NAMES = {
+  '64': 'Round of 64',
+  '32': 'Round of 32',
+  '16': 'Sweet 16',
+  '8':  'Elite 8',
+  '4':  'Final Four'
+};
+const ROUND_ORDER = ['64', '32', '16', '8', '4'];
 
-// shared axis/label styling helpers
-const SF = 'system-ui,sans-serif';
-function styleAxis(ax) {
-  ax.select('.domain').remove();
-  ax.selectAll('line').attr('stroke','#edf2f7');
-  ax.selectAll('text').style('font-size','10px').style('font-family',SF).attr('fill','#718096');
+// Font shorthand used throughout
+const FONT = 'system-ui, sans-serif';
+
+// Colors
+const COLOR_DARK   = '#0f3460'; // navy — selected / active
+const COLOR_LIGHT  = '#d0e4ff'; // pale blue — deselected bars
+const COLOR_UPSET  = '#e94560'; // red — upset boxes
+const COLOR_EXPECT = 'steelblue'; // blue — expected outcome boxes
+
+
+// =============================================================
+// TOOLTIP HELPERS
+// The tooltip is a fixed <div> that follows the mouse.
+// showTip() fills it with HTML and makes it visible.
+// hideTip() fades it out.
+// =============================================================
+const tooltipEl = document.getElementById('tooltip');
+
+function showTip(html, mouseEvent) {
+  tooltipEl.innerHTML = html;
+  tooltipEl.style.opacity = 1;
+  tooltipEl.style.left = (mouseEvent.clientX + 14) + 'px';
+  tooltipEl.style.top  = (mouseEvent.clientY - 14) + 'px';
 }
-function styleAxisNoLine(ax) {
-  ax.select('.domain').remove();
-  ax.selectAll('line').remove();
-  ax.selectAll('text').style('font-size','10px').style('font-family',SF).attr('fill','#718096');
+
+function hideTip() {
+  tooltipEl.style.opacity = 0;
 }
-function makeSvg(id, W, H, mg) {
-  const svg = d3.select('#'+id).attr('width',W).attr('height',H);
+
+
+// =============================================================
+// SVG HELPER — creates (or clears) an <svg> and returns the
+// inner drawing group <g> already shifted by the margins.
+//
+// Why margins? SVG draws from (0,0) at the top-left corner.
+// Margins give us room for axis labels outside the chart area.
+// =============================================================
+function createSvg(svgId, totalWidth, totalHeight, margins) {
+  const svg = d3.select('#' + svgId)
+    .attr('width',  totalWidth)
+    .attr('height', totalHeight);
+
+  // Wipe anything that was drawn before (needed when filters change)
   svg.selectAll('*').remove();
-  return { svg, g: svg.append('g').attr('transform',`translate(${mg.l},${mg.t})`) };
-}
-function label(g, x, y, txt, anchor='middle', size='10px', color='#a0aec0') {
-  g.append('text').attr('x',x).attr('y',y).attr('text-anchor',anchor)
-    .attr('font-size',size).attr('font-family',SF).attr('fill',color).text(txt);
+
+  // The inner group is offset so (0,0) inside it = top-left of the plot area
+  const g = svg.append('g')
+    .attr('transform', `translate(${margins.left}, ${margins.top})`);
+
+  return { svg, g };
 }
 
-// parse game records from raw matchup rows
+
+// =============================================================
+// AXIS HELPERS
+// D3 axes add a long line ("domain") and tick lines.
+// These helpers remove or style them to match the clean look.
+// =============================================================
+
+// Grid lines visible, domain line removed
+function styleAxisWithGrid(axisGroup) {
+  axisGroup.select('.domain').remove();
+  axisGroup.selectAll('line').attr('stroke', '#edf2f7');
+  axisGroup.selectAll('text')
+    .style('font-size',   '10px')
+    .style('font-family', FONT)
+    .attr('fill', '#718096');
+}
+
+// No lines at all — labels only
+function styleAxisLabelsOnly(axisGroup) {
+  axisGroup.select('.domain').remove();
+  axisGroup.selectAll('line').remove();
+  axisGroup.selectAll('text')
+    .style('font-size',   '10px')
+    .style('font-family', FONT)
+    .attr('fill', '#718096');
+}
+
+
+// =============================================================
+// SHARED STATE — tracks what the user has filtered to.
+// All charts read these variables whenever they redraw.
+// =============================================================
+let yearRange   = [0, 9999];  // will be set properly once data loads
+let activeRound = 'all';      // 'all' or one of '64','32','16','8','4'
+
+
+// =============================================================
+// DATA PROCESSING
+// Turn the flat CSV rows in RAW_MATCHUPS into paired game objects.
+//
+// Each row in RAW_MATCHUPS is one team's entry in one game.
+// We need to find both teams in the same game and pair them up.
+//
+// How we pair them:
+//   - Filter to rows that have a score (completed games)
+//   - Group rows by YEAR + CURRENT ROUND (each group = all teams in that round that year)
+//   - Sort each group by "BY YEAR NO" descending — teams in the same game
+//     get consecutive BY YEAR NOs, so after sorting they sit next to each other
+//   - Step through in pairs: rows[0]+rows[1] = game 1, rows[2]+rows[3] = game 2, etc.
+// =============================================================
 let GAMES = [];
-(function() {
-  const done = RAW_MATCHUPS.filter(d => d.SCORE !== '');
-  d3.group(done, d => d.YEAR+'_'+d['CURRENT ROUND']).forEach(rows => {
-    rows.sort((a,b) => +b['BY YEAR NO'] - +a['BY YEAR NO']);
-    for (let i = 0; i < rows.length-1; i += 2) {
-      const [t1,t2] = [rows[i],rows[i+1]];
-      const [s1,s2] = [+t1.SCORE, +t2.SCORE];
-      if (!s1||!s2) continue;
-      const [win,lose] = s1>s2 ? [t1,t2] : [t2,t1];
-      const [ws,ls] = [+win.SEED, +lose.SEED];
+
+(function buildGames() {
+  // Only include rows where a score was recorded
+  const completedRows = RAW_MATCHUPS.filter(row => row.SCORE !== '');
+
+  // Group rows: key = "2024_64", value = array of team rows in that group
+  const grouped = d3.group(completedRows, row => row.YEAR + '_' + row['CURRENT ROUND']);
+
+  grouped.forEach(function(rows) {
+    // Sort so game partners are adjacent (highest BY YEAR NO first)
+    rows.sort((a, b) => +b['BY YEAR NO'] - +a['BY YEAR NO']);
+
+    // Walk through in steps of 2 — each pair is one game
+    for (let i = 0; i < rows.length - 1; i += 2) {
+      const team1 = rows[i];
+      const team2 = rows[i + 1];
+
+      const score1 = +team1.SCORE;
+      const score2 = +team2.SCORE;
+
+      // Skip if either score is missing/zero
+      if (!score1 || !score2) continue;
+
+      // Figure out which team won
+      const winner = score1 > score2 ? team1 : team2;
+      const loser  = score1 > score2 ? team2 : team1;
+
+      const winnerSeed = +winner.SEED;
+      const loserSeed  = +loser.SEED;
+
+      // An upset = the higher seed number (weaker team) wins
+      // In NCAA seeding, seed 1 is the best — so seed 12 beating seed 5 is an upset
+      const isUpset = winnerSeed > loserSeed;
+
       GAMES.push({
-        year: +t1.YEAR, round: t1['CURRENT ROUND'],
-        round_name: ROUND_NAMES[t1['CURRENT ROUND']] || t1['CURRENT ROUND'],
-        winner: win.TEAM, winner_seed: ws, winner_score: +win.SCORE,
-        loser: lose.TEAM,  loser_seed: ls,  loser_score: +lose.SCORE,
-        is_upset: ws > ls, margin: Math.abs(s1-s2)
+        year:         +team1.YEAR,
+        round:        team1['CURRENT ROUND'],
+        roundName:    ROUND_NAMES[team1['CURRENT ROUND']] || team1['CURRENT ROUND'],
+        winner:       winner.TEAM,
+        winnerSeed:   winnerSeed,
+        winnerScore:  +winner.SCORE,
+        loser:        loser.TEAM,
+        loserSeed:    loserSeed,
+        loserScore:   +loser.SCORE,
+        isUpset:      isUpset,
+        margin:       Math.abs(score1 - score2)  // point difference
       });
     }
   });
 })();
 
-const allYears = [...new Set(GAMES.map(d=>d.year))].sort((a,b)=>a-b);
-const UPSET_COUNT  = RAW_UPSET_COUNT.map(d=>({ year:+d.YEAR, total:+d.TOTAL }));
-const SEED_RESULTS = RAW_SEED_RESULTS.map(d=>({
-  seed:+d.SEED, pake:+d.PAKE, winPct:+d['WIN%'], games:+d.GAMES
-})).sort((a,b)=>a.seed-b.seed);
 
-let yearRange   = [d3.min(allYears), d3.max(allYears)];
-let activeRound = 'all';
+// =============================================================
+// DERIVED DATA ARRAYS
+// Clean up the other two CSV arrays for easier use.
+// =============================================================
 
-// tooltip
-const tip = document.getElementById('tooltip');
-const showTip = (html,e) => { tip.innerHTML=html; tip.style.opacity=1; tip.style.left=(e.clientX+14)+'px'; tip.style.top=(e.clientY-14)+'px'; };
-const hideTip = () => tip.style.opacity=0;
+// All unique years that appear in the games data
+const allYears = [...new Set(GAMES.map(g => g.year))].sort((a, b) => a - b);
 
-const filteredGames  = () => GAMES.filter(d => d.year>=yearRange[0] && d.year<=yearRange[1] && (activeRound==='all'||d.round===activeRound));
-const filteredUpsets = () => filteredGames().filter(d=>d.is_upset);
+// Upset count per year (for the timeline bar chart)
+const upsetCountByYear = RAW_UPSET_COUNT.map(row => ({
+  year:  +row.YEAR,
+  total: +row.TOTAL
+}));
 
-function updateYearDisplay() {
-  document.getElementById('year-display').textContent =
-    yearRange[0]===yearRange[1] ? String(yearRange[0]) : yearRange[0]+' – '+yearRange[1];
+// Seed performance data (for the seed profile chart)
+// WIN% comes in as a decimal like 0.465
+const seedResults = RAW_SEED_RESULTS.map(row => ({
+  seed:   +row.SEED,
+  pake:   +row.PAKE,
+  winPct: +row['WIN%'],
+  games:  +row.GAMES
+})).sort((a, b) => a.seed - b.seed);  // sort seed 1 → 16 top to bottom
+
+
+// Set the initial year range now that we have the data
+yearRange = [d3.min(allYears), d3.max(allYears)];
+
+
+// =============================================================
+// FILTER HELPERS
+// These return only the games that match the current filters.
+// Every chart calls these before drawing.
+// =============================================================
+
+function getFilteredGames() {
+  return GAMES.filter(game => {
+    const inYearRange = game.year >= yearRange[0] && game.year <= yearRange[1];
+    const inRound     = activeRound === 'all' || game.round === activeRound;
+    return inYearRange && inRound;
+  });
 }
 
-document.querySelectorAll('.sticky-bar button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sticky-bar button').forEach(b=>b.classList.remove('active'));
+function getFilteredUpsets() {
+  return getFilteredGames().filter(game => game.isUpset);
+}
+
+
+// =============================================================
+// YEAR DISPLAY — updates the "2008 – 2025" text in the sticky bar
+// =============================================================
+function updateYearDisplay() {
+  const text = yearRange[0] === yearRange[1]
+    ? String(yearRange[0])
+    : yearRange[0] + ' – ' + yearRange[1];
+  document.getElementById('year-display').textContent = text;
+}
+
+
+// =============================================================
+// ROUND FILTER BUTTONS
+// When a button is clicked: update activeRound, mark it active,
+// and redraw the charts that change with round filtering.
+// =============================================================
+document.querySelectorAll('.sticky-bar button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    // Remove 'active' class from all buttons
+    document.querySelectorAll('.sticky-bar button').forEach(b => b.classList.remove('active'));
+    // Add it only to the clicked one
     btn.classList.add('active');
+
     activeRound = btn.dataset.round;
-    clearDrilldown(); buildHeatmap(); buildMarginChart();
+
+    // These two charts change based on round; timeline and seed profile don't
+    clearDrilldown();
+    buildHeatmap();
+    buildMarginChart();
   });
 });
 
-// VIEW 1 — TIMELINE
+
+// =============================================================
+// CHART 1 — DOT PLOT WITH TREND LINE + ERA ANNOTATIONS
+//
+// Each year = one dot at its upset count.
+// A 3-year rolling average line shows the overall drift.
+// Vertical annotations mark structural breaks (COVID, NIL).
+// The brush still lets users drag to filter all other charts.
+// =============================================================
 function buildTimeline() {
-  const W = Math.min(document.getElementById('timeline-wrap').clientWidth||852,852), H=130;
-  const mg = {t:14,r:20,b:30,l:44};
-  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
-  const {svg,g} = makeSvg('timeline',W,H,mg);
+  const wrapWidth = document.getElementById('timeline-wrap').clientWidth || 852;
+  const W = Math.min(wrapWidth, 852);
+  const H = 200;  // taller than before to fit annotations
 
-  const counts = allYears.map(y=>({ year:y, count: UPSET_COUNT.find(d=>d.year===y)?.total||0 }));
-  const x = d3.scaleBand().domain(allYears).range([0,iW]).padding(0.25);
-  const y = d3.scaleLinear().domain([0,d3.max(counts,d=>d.count)*1.15]).range([iH,0]).nice();
+  const margins = { top: 40, right: 20, bottom: 30, left: 44 };
+  const innerW = W - margins.left - margins.right;
+  const innerH = H - margins.top  - margins.bottom;
 
-  g.append('g').attr('transform',`translate(0,${iH})`)
-    .call(d3.axisBottom(x).tickFormat(d=>`'${String(d).slice(2)}`))
-    .call(styleAxisNoLine);
-  g.append('g').call(d3.axisLeft(y).ticks(4).tickSize(-iW)).call(styleAxis);
+  const { svg, g } = createSvg('timeline', W, H, margins);
 
-  const bars = g.selectAll('.bar').data(counts).join('rect').attr('class','bar')
-    .attr('x',d=>x(d.year)).attr('y',d=>y(d.count))
-    .attr('width',x.bandwidth()).attr('height',d=>iH-y(d.count)).attr('rx',2)
-    .attr('fill',d=>(d.year>=yearRange[0]&&d.year<=yearRange[1])?'#0f3460':'#d0e4ff')
-    .on('mouseover',(e,d)=>showTip(`<b>${d.year}</b><br>${d.count} upsets`,e))
-    .on('mouseout',hideTip);
+  // One data point per year
+  const dotData = allYears.map(yr => ({
+    year:  yr,
+    count: upsetCountByYear.find(d => d.year === yr)?.total || 0
+  }));
 
-  g.append('g').attr('class','brush').call(
-    d3.brushX().extent([[0,0],[iW,iH]]).on('brush end', event => {
-      if (!event.selection) {
-        yearRange = [d3.min(allYears),d3.max(allYears)];
-      } else {
-        const [x0,x1] = event.selection;
-        const inRange = allYears.filter(yr=>x(yr)+x.bandwidth()>x0&&x(yr)<x1);
-        yearRange = inRange.length ? [Math.min(...inRange),Math.max(...inRange)] : [d3.min(allYears),d3.max(allYears)];
-      }
-      updateYearDisplay();
-      bars.attr('fill',d=>(d.year>=yearRange[0]&&d.year<=yearRange[1])?'#0f3460':'#d0e4ff');
-      clearDrilldown(); buildHeatmap(); buildMarginChart();
+  // --- SCALES ---
+  // scalePoint: places each year at an evenly spaced point (not a band)
+  // Good for dot plots where each x position is a single point, not a bar width
+  const xScale = d3.scalePoint()
+    .domain(allYears)
+    .range([0, innerW])
+    .padding(0.5);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(dotData, d => d.count) * 1.2])
+    .range([innerH, 0])
+    .nice();
+
+  // --- AXES ---
+  g.append('g')
+    .attr('transform', `translate(0, ${innerH})`)
+    .call(d3.axisBottom(xScale).tickFormat(yr => `'${String(yr).slice(2)}`))
+    .call(styleAxisLabelsOnly);
+
+  g.append('g')
+    .call(d3.axisLeft(yScale).ticks(4).tickSize(-innerW))
+    .call(styleAxisWithGrid);
+
+  // --- ERA ANNOTATION ZONES ---
+  // Shaded backgrounds to mark distinct eras
+  const eras = [
+    { start: 2008, end: 2015, label: 'Pre-NIL era',    color: '#f0f4ff' },
+    { start: 2021, end: 2021, label: 'COVID bubble',   color: '#fff3f3' },
+    { start: 2022, end: 2025, label: 'NIL era',        color: '#f0fff4' },
+  ];
+
+  eras.forEach(era => {
+    // Find pixel positions for the start and end years
+    // xScale gives the center of each year point, so we pad by half the step
+    const step = innerW / (allYears.length - 1);
+    const x0 = xScale(era.start) - step * 0.5;
+    const x1 = xScale(era.end)   + step * 0.5;
+
+    // Only draw if both years exist in our data
+    if (xScale(era.start) === undefined || xScale(era.end) === undefined) return;
+
+    // Shaded background rectangle
+    g.append('rect')
+      .attr('x',      x0)
+      .attr('y',      0)
+      .attr('width',  x1 - x0)
+      .attr('height', innerH)
+      .attr('fill',   era.color)
+      .attr('opacity', 0.7);
+
+    // Label above the chart (in the top margin)
+    g.append('text')
+      .attr('x', (x0 + x1) / 2)
+      .attr('y', -10)
+      .attr('text-anchor', 'middle')
+      .attr('font-size',   '9px')
+      .attr('font-family', FONT)
+      .attr('fill', '#a0aec0')
+      .text(era.label);
+  });
+
+  // --- 3-YEAR ROLLING AVERAGE TREND LINE ---
+  // For each year (starting at index 1 to have a previous year),
+  // average the current year and its two neighbors
+  const trendData = dotData.filter((d, i) => i >= 1 && i <= dotData.length - 2).map((d, i) => {
+    const prev = dotData[i];      // i is offset by 1 because we filtered from index 1
+    const curr = dotData[i + 1];
+    const next = dotData[i + 2];
+    return {
+      year:  curr.year,
+      avg:   (prev.count + curr.count + next.count) / 3
+    };
+  });
+
+  // d3.line() builds an SVG path string from an array of data points
+  const trendLine = d3.line()
+    .x(d => xScale(d.year))
+    .y(d => yScale(d.avg))
+    .curve(d3.curveCatmullRom);  // smooth curve through the points
+
+  g.append('path')
+    .datum(trendData)
+    .attr('d', trendLine)
+    .attr('fill',         'none')
+    .attr('stroke',       '#0f3460')
+    .attr('stroke-width', 2)
+    .attr('opacity',      0.5)
+    .attr('stroke-dasharray', '4,3');  // dashed so it doesn't obscure the dots
+
+  // --- DOTS ---
+  const dots = g.selectAll('.dot')
+    .data(dotData)
+    .join('circle')
+    .attr('class', 'dot')
+    .attr('cx', d => xScale(d.year))
+    .attr('cy', d => yScale(d.count))
+    .attr('r',  5)
+    .attr('fill', d => {
+      const inRange = d.year >= yearRange[0] && d.year <= yearRange[1];
+      return inRange ? COLOR_DARK : COLOR_LIGHT;
     })
-  );
+    .attr('stroke',       '#fff')
+    .attr('stroke-width', 1.5)
+    .on('mouseover', (event, d) => showTip(`<b>${d.year}</b><br>${d.count} upsets`, event))
+    .on('mouseout',  hideTip);
+
+  // --- BRUSH ---
+  // Same logic as before: drag to select a year range
+  // scalePoint doesn't have a bandwidth(), so we use the step between points
+  const step = innerW / (allYears.length - 1);
+
+  const brush = d3.brushX()
+    .extent([[0, 0], [innerW, innerH]])
+    .on('brush end', function(event) {
+      if (!event.selection) {
+        yearRange = [d3.min(allYears), d3.max(allYears)];
+      } else {
+        const [leftPx, rightPx] = event.selection;
+
+        // A dot is "in range" if its x position falls within the brush
+        const yearsInBrush = allYears.filter(yr => {
+          const dotX = xScale(yr);
+          return dotX >= leftPx - step / 2 && dotX <= rightPx + step / 2;
+        });
+
+        if (yearsInBrush.length > 0) {
+          yearRange = [Math.min(...yearsInBrush), Math.max(...yearsInBrush)];
+        } else {
+          yearRange = [d3.min(allYears), d3.max(allYears)];
+        }
+      }
+
+      updateYearDisplay();
+
+      dots.attr('fill', d => {
+        const inRange = d.year >= yearRange[0] && d.year <= yearRange[1];
+        return inRange ? COLOR_DARK : COLOR_LIGHT;
+      });
+
+      clearDrilldown();
+      buildHeatmap();
+      buildMarginChart();
+    });
+
+  g.append('g').attr('class', 'brush').call(brush);
 }
 
-// VIEW 2 — HEATMAP
+
+// =============================================================
+// CHART 2 — HEATMAP
+// A grid where each cell = (winner seed) vs (loser seed).
+// Color intensity = how many times that upset has happened.
+// =============================================================
 function buildHeatmap() {
-  const upsets = filteredUpsets();
+  const upsets = getFilteredUpsets();
+
+  // Count how many times each seed matchup appears
+  // Key format: "winnerSeed-loserSeed", e.g. "12-5"
   const countMap = {};
-  upsets.forEach(d => { const k=`${d.winner_seed}-${d.loser_seed}`; countMap[k]=(countMap[k]||0)+1; });
+  upsets.forEach(game => {
+    const key = game.winnerSeed + '-' + game.loserSeed;
+    countMap[key] = (countMap[key] || 0) + 1;
+  });
 
-  const lSeeds = d3.range(1,16), wSeeds = d3.range(2,17);
-  const cells = lSeeds.flatMap(ls => wSeeds.filter(ws=>ws>ls).map(ws=>({ ls,ws, count:countMap[`${ws}-${ls}`]||0 })));
-  const maxCount = d3.max(cells,d=>d.count)||1;
+  // The grid covers loser seeds 1–15 (x-axis) and winner seeds 2–16 (y-axis)
+  // We only show cells where winnerSeed > loserSeed (that's what makes it an upset)
+  const loserSeeds  = d3.range(1, 16);   // [1, 2, 3, ..., 15]
+  const winnerSeeds = d3.range(2, 17);   // [2, 3, 4, ..., 16]
 
-  const cell=32, pad=2, mg={t:36,l:36,r:16,b:16};
-  const W = mg.l+15*(cell+pad)+mg.r, H = mg.t+15*(cell+pad)+mg.b;
-  const {svg,g} = makeSvg('heatmap',W,H,mg);
-  const color = d3.scaleSequential([0,maxCount],d3.interpolateBlues);
+  const cells = [];
+  loserSeeds.forEach(ls => {
+    winnerSeeds.forEach(ws => {
+      if (ws > ls) {   // only valid upset matchups
+        cells.push({
+          loserSeed:  ls,
+          winnerSeed: ws,
+          count: countMap[ws + '-' + ls] || 0
+        });
+      }
+    });
+  });
 
-  lSeeds.forEach((s,i)=>label(g,i*(cell+pad)+cell/2,-10,s));
-  wSeeds.forEach((s,i)=>g.append('text').attr('x',-8).attr('y',i*(cell+pad)+cell/2+4)
-    .attr('text-anchor','end').attr('font-size','10px').attr('font-family',SF).attr('fill','#718096').text(s));
-  label(svg, mg.l+15*(cell+pad)/2, 14, 'Favored seed (lost) →');
-  svg.append('text').attr('transform','rotate(-90)')
-    .attr('x',-(mg.t+15*(cell+pad)/2)).attr('y',12)
-    .attr('text-anchor','middle').attr('font-size','10px').attr('font-family',SF).attr('fill','#a0aec0')
+  const maxCount = d3.max(cells, d => d.count) || 1;
+
+  // Each cell is a square
+  const cellSize = 32;
+  const cellGap  = 2;
+  const margins  = { top: 36, left: 36, right: 16, bottom: 16 };
+
+  const W = margins.left + 15 * (cellSize + cellGap) + margins.right;
+  const H = margins.top  + 15 * (cellSize + cellGap) + margins.bottom;
+
+  const { svg, g } = createSvg('heatmap', W, H, margins);
+
+  // Color scale: white → dark blue as count increases
+  const colorScale = d3.scaleSequential([0, maxCount], d3.interpolateBlues);
+
+  // --- AXIS LABELS ---
+  // Top: loser seed numbers (x-axis)
+  loserSeeds.forEach((seed, i) => {
+    g.append('text')
+      .attr('x', i * (cellSize + cellGap) + cellSize / 2)
+      .attr('y', -10)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', '10px')
+      .attr('font-family', FONT)
+      .attr('fill', '#718096')
+      .text(seed);
+  });
+
+  // Left: winner seed numbers (y-axis)
+  winnerSeeds.forEach((seed, i) => {
+    g.append('text')
+      .attr('x', -8)
+      .attr('y', i * (cellSize + cellGap) + cellSize / 2 + 4)
+      .attr('text-anchor', 'end')
+      .attr('font-size', '10px')
+      .attr('font-family', FONT)
+      .attr('fill', '#718096')
+      .text(seed);
+  });
+
+  // Axis title labels on the SVG (outside the inner g)
+  svg.append('text')
+    .attr('x', margins.left + (15 * (cellSize + cellGap)) / 2)
+    .attr('y', 14)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '10px')
+    .attr('font-family', FONT)
+    .attr('fill', '#a0aec0')
+    .text('Favored seed (lost) →');
+
+  svg.append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('x', -(margins.top + (15 * (cellSize + cellGap)) / 2))
+    .attr('y', 12)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '10px')
+    .attr('font-family', FONT)
+    .attr('fill', '#a0aec0')
     .text('Upset winner seed →');
 
-  const cellG = g.selectAll('.cell').data(cells).join('g').attr('class','cell')
-    .attr('transform',d=>`translate(${lSeeds.indexOf(d.ls)*(cell+pad)},${wSeeds.indexOf(d.ws)*(cell+pad)})`);
+  // --- CELLS ---
+  // One <g> per cell, translated to its grid position
+  const cellGroups = g.selectAll('.cell')
+    .data(cells)
+    .join('g')
+    .attr('class', 'cell')
+    .attr('transform', d => {
+      const col = loserSeeds.indexOf(d.loserSeed);
+      const row = winnerSeeds.indexOf(d.winnerSeed);
+      return `translate(${col * (cellSize + cellGap)}, ${row * (cellSize + cellGap)})`;
+    });
 
-  cellG.append('rect').attr('width',cell).attr('height',cell).attr('rx',3)
-    .attr('fill',d=>d.count?color(d.count):'#f7fafc')
-    .attr('stroke','#fff').attr('stroke-width',1.5)
-    .style('cursor',d=>d.count?'pointer':'default');
+  // Background rectangle for each cell
+  cellGroups.append('rect')
+    .attr('width',  cellSize)
+    .attr('height', cellSize)
+    .attr('rx', 3)
+    .attr('fill',         d => d.count ? colorScale(d.count) : '#f7fafc')
+    .attr('stroke',       '#fff')
+    .attr('stroke-width', 1.5)
+    .style('cursor', d => d.count ? 'pointer' : 'default');
 
-  cellG.filter(d=>d.count>0).append('text')
-    .attr('x',cell/2).attr('y',cell/2+4).attr('text-anchor','middle')
-    .attr('font-size','9px').attr('font-family',SF)
-    .attr('fill',d=>d.count>maxCount*.6?'#fff':'#2d3748').text(d=>d.count);
+  // Count number inside each cell (only if there were upsets)
+  cellGroups.filter(d => d.count > 0)
+    .append('text')
+    .attr('x', cellSize / 2)
+    .attr('y', cellSize / 2 + 4)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '9px')
+    .attr('font-family', FONT)
+    // Use white text on dark cells, dark text on light cells
+    .attr('fill', d => d.count > maxCount * 0.6 ? '#fff' : '#2d3748')
+    .text(d => d.count);
 
-  cellG
-    .on('mouseover',(e,d)=>{ if(d.count) showTip(`Seed <b>${d.ws}</b> upsets Seed <b>${d.ls}</b><br>${d.count} time${d.count>1?'s':''}`,e); })
-    .on('mouseout',hideTip)
-    .on('click',(e,d)=>{ if(d.count) showDrilldown(d.ws,d.ls); });
+  // Mouse events on every cell
+  cellGroups
+    .on('mouseover', function(event, d) {
+      if (d.count) {
+        showTip(
+          `Seed <b>${d.winnerSeed}</b> upsets Seed <b>${d.loserSeed}</b><br>${d.count} time${d.count > 1 ? 's' : ''}`,
+          event
+        );
+      }
+    })
+    .on('mouseout', hideTip)
+    .on('click', function(event, d) {
+      if (d.count) showDrilldown(d.winnerSeed, d.loserSeed);
+    });
 }
 
-// VIEW 3 — DRILLDOWN TABLE
-function showDrilldown(ws,ls) {
-  const games = filteredUpsets().filter(d=>d.winner_seed===ws&&d.loser_seed===ls).sort((a,b)=>b.year-a.year);
+
+// =============================================================
+// CHART 2b — DRILLDOWN TABLE
+// Shows individual game rows when a heatmap cell is clicked.
+// =============================================================
+function showDrilldown(winnerSeed, loserSeed) {
+  // Get all upsets matching those seeds, newest first
+  const matchingGames = getFilteredUpsets()
+    .filter(g => g.winnerSeed === winnerSeed && g.loserSeed === loserSeed)
+    .sort((a, b) => b.year - a.year);
+
   document.getElementById('drilldown-title').textContent =
-    `Seed ${ws} upsets Seed ${ls} — ${games.length} game${games.length!==1?'s':''}`;
-  document.getElementById('drilldown-content').innerHTML = games.length
-    ? `<table><thead><tr><th>Year</th><th>Round</th><th>Winner</th><th>Score</th><th>Loser</th></tr></thead><tbody>
-        ${games.map(g=>`<tr><td>${g.year}</td><td>${g.round_name}</td><td><b>${g.winner}</b> (${g.winner_seed})</td><td>${g.winner_score}–${g.loser_score}</td><td>${g.loser} (${g.loser_seed})</td></tr>`).join('')}
-       </tbody></table>`
-    : '<p style="color:#718096;font-size:13px">No games in selected range.</p>';
+    `Seed ${winnerSeed} upsets Seed ${loserSeed} — ${matchingGames.length} game${matchingGames.length !== 1 ? 's' : ''}`;
+
+  if (matchingGames.length === 0) {
+    document.getElementById('drilldown-content').innerHTML =
+      '<p style="color:#718096;font-size:13px">No games in selected range.</p>';
+    return;
+  }
+
+  // Build table rows as an HTML string
+  const rows = matchingGames.map(game =>
+    `<tr>
+      <td>${game.year}</td>
+      <td>${game.roundName}</td>
+      <td><b>${game.winner}</b> (${game.winnerSeed})</td>
+      <td>${game.winnerScore}–${game.loserScore}</td>
+      <td>${game.loser} (${game.loserSeed})</td>
+    </tr>`
+  ).join('');
+
+  document.getElementById('drilldown-content').innerHTML = `
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Round</th><th>Winner</th><th>Score</th><th>Loser</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 }
+
 function clearDrilldown() {
-  document.getElementById('drilldown-title').textContent='Click a cell to see individual games';
-  document.getElementById('drilldown-content').innerHTML='';
+  document.getElementById('drilldown-title').textContent = 'Click a cell to see individual games';
+  document.getElementById('drilldown-content').innerHTML = '';
 }
 
-// VIEW 4 — SEED PERFORMANCE PROFILE
+
+// =============================================================
+// CHART 3 — SEED PERFORMANCE PROFILE
+// Horizontal bars = win rate per seed.
+// Dots on the right = PAKE score (over/underperformance).
+// This chart does NOT change with year/round filters.
+// =============================================================
 function buildSeedProfile() {
-  const W = Math.min(document.getElementById('seedprofile-wrap').clientWidth||852,852), H=400;
-  const mg = {t:20,r:170,b:40,l:52};
-  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
-  const {svg,g} = makeSvg('seed-profile',W,H,mg);
+  const wrapWidth = document.getElementById('seedprofile-wrap').clientWidth || 852;
+  const W = Math.min(wrapWidth, 852);
+  const H = 400;
 
-  const x = d3.scaleLinear().domain([0,1]).range([0,iW]).nice();
-  const y = d3.scaleBand().domain(SEED_RESULTS.map(d=>d.seed)).range([0,iH]).padding(0.3);
+  const margins = { top: 20, right: 170, bottom: 40, left: 52 };
+  const innerW  = W - margins.left - margins.right;
+  const innerH  = H - margins.top  - margins.bottom;
 
-  g.append('g').attr('transform',`translate(0,${iH})`)
-    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')).tickSize(-iH)).call(styleAxis);
-  g.append('g').call(d3.axisLeft(y).tickFormat(d=>`#${d}`)).call(styleAxisNoLine);
+  const { svg, g } = createSvg('seed-profile', W, H, margins);
 
-  const barColor = d => ['#0f3460','#3182ce','#e53e3e','#fc8181'][Math.min(Math.floor((d.seed-1)/4),3)];
+  // --- SCALES ---
+  // x: win percentage (0 to 100%)
+  const xScale = d3.scaleLinear()
+    .domain([0, 1])
+    .range([0, innerW])
+    .nice();
 
-  g.selectAll('.bar').data(SEED_RESULTS).join('rect').attr('class','bar')
-    .attr('x',0).attr('y',d=>y(d.seed))
-    .attr('width',d=>x(d.winPct)).attr('height',y.bandwidth())
-    .attr('rx',3).attr('fill',barColor).attr('opacity',.85)
-    .on('mouseover',(e,d)=>showTip(`<b>Seed ${d.seed}</b><br>Win Rate: ${(d.winPct*100).toFixed(1)}%<br>PAKE: ${d.pake>=0?'+':''}${d.pake}<br>Games: ${d.games}`,e))
-    .on('mouseout',hideTip);
+  // y: one band per seed (seeds 1–16 top to bottom)
+  const yScale = d3.scaleBand()
+    .domain(seedResults.map(d => d.seed))
+    .range([0, innerH])
+    .padding(0.3);
 
-  g.selectAll('.pct-label').data(SEED_RESULTS).join('text').attr('class','pct-label')
-    .attr('x',d=>x(d.winPct)+5).attr('y',d=>y(d.seed)+y.bandwidth()/2+4)
-    .text(d=>`${(d.winPct*100).toFixed(0)}%`)
-    .attr('font-size','10px').attr('font-family',SF).attr('fill','#718096');
+  // --- AXES ---
+  g.append('g')
+    .attr('transform', `translate(0, ${innerH})`)
+    .call(d3.axisBottom(xScale).ticks(5).tickFormat(d3.format('.0%')).tickSize(-innerH))
+    .call(styleAxisWithGrid);
 
-  const pakePad=1;
-  const pakeX = d3.scaleLinear()
-    .domain([d3.min(SEED_RESULTS,d=>d.pake)-pakePad, d3.max(SEED_RESULTS,d=>d.pake)+pakePad])
-    .range([iW+36, iW+150]);
+  g.append('g')
+    .call(d3.axisLeft(yScale).tickFormat(seed => `#${seed}`))
+    .call(styleAxisLabelsOnly);
 
-  g.append('line').attr('x1',pakeX(0)).attr('x2',pakeX(0)).attr('y1',-5).attr('y2',iH+5)
-    .attr('stroke','#cbd5e0').attr('stroke-dasharray','3,3');
-  label(g,(iW+36+iW+150)/2,-8,'PAKE score');
+  // --- BARS ---
+  // Color by seed group: 1–4 navy, 5–8 blue, 9–12 red, 13–16 light red
+  function barColor(d) {
+    const group = Math.min(Math.floor((d.seed - 1) / 4), 3);
+    return ['#0f3460', '#3182ce', '#e53e3e', '#fc8181'][group];
+  }
 
-  g.selectAll('.pake-dot').data(SEED_RESULTS).join('circle').attr('class','pake-dot')
-    .attr('cx',d=>pakeX(d.pake)).attr('cy',d=>y(d.seed)+y.bandwidth()/2)
-    .attr('r',5).attr('fill',d=>d.pake>=0?'#38a169':'#e53e3e')
-    .attr('stroke','#fff').attr('stroke-width',1.5)
-    .on('mouseover',(e,d)=>showTip(`<b>Seed ${d.seed}</b><br>PAKE: ${d.pake>=0?'+':''}${d.pake}<br>${d.pake>=0?'Overperforms':'Underperforms'} vs. expectation`,e))
-    .on('mouseout',hideTip);
+  g.selectAll('.bar')
+    .data(seedResults)
+    .join('rect')
+    .attr('class', 'bar')
+    .attr('x',      0)
+    .attr('y',      d => yScale(d.seed))
+    .attr('width',  d => xScale(d.winPct))
+    .attr('height', yScale.bandwidth())
+    .attr('rx', 3)
+    .attr('fill',    barColor)
+    .attr('opacity', 0.85)
+    .on('mouseover', (event, d) => showTip(
+      `<b>Seed ${d.seed}</b><br>Win Rate: ${(d.winPct * 100).toFixed(1)}%<br>PAKE: ${d.pake >= 0 ? '+' : ''}${d.pake}<br>Games: ${d.games}`,
+      event
+    ))
+    .on('mouseout', hideTip);
+
+  // Win percentage labels to the right of each bar
+  g.selectAll('.pct-label')
+    .data(seedResults)
+    .join('text')
+    .attr('class', 'pct-label')
+    .attr('x', d => xScale(d.winPct) + 5)
+    .attr('y', d => yScale(d.seed) + yScale.bandwidth() / 2 + 4)
+    .text(d => `${(d.winPct * 100).toFixed(0)}%`)
+    .attr('font-size',   '10px')
+    .attr('font-family', FONT)
+    .attr('fill', '#718096');
+
+  // --- PAKE PANEL ---
+  // A small secondary scale drawn to the right of the bars
+  const pakePadding = 1;
+  const pakeXScale = d3.scaleLinear()
+    .domain([d3.min(seedResults, d => d.pake) - pakePadding,
+             d3.max(seedResults, d => d.pake) + pakePadding])
+    .range([innerW + 36, innerW + 150]);  // positioned in the right margin
+
+  // Vertical zero line for the PAKE panel
+  g.append('line')
+    .attr('x1', pakeXScale(0)).attr('x2', pakeXScale(0))
+    .attr('y1', -5).attr('y2', innerH + 5)
+    .attr('stroke', '#cbd5e0')
+    .attr('stroke-dasharray', '3,3');
+
+  // "PAKE score" label above the panel
+  g.append('text')
+    .attr('x', (pakeXScale.range()[0] + pakeXScale.range()[1]) / 2)
+    .attr('y', -8)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '10px')
+    .attr('font-family', FONT)
+    .attr('fill', '#a0aec0')
+    .text('PAKE score');
+
+  // One dot per seed
+  g.selectAll('.pake-dot')
+    .data(seedResults)
+    .join('circle')
+    .attr('class', 'pake-dot')
+    .attr('cx', d => pakeXScale(d.pake))
+    .attr('cy', d => yScale(d.seed) + yScale.bandwidth() / 2)
+    .attr('r', 5)
+    .attr('fill',         d => d.pake >= 0 ? '#38a169' : '#e53e3e')  // green = good, red = bad
+    .attr('stroke',       '#fff')
+    .attr('stroke-width', 1.5)
+    .on('mouseover', (event, d) => showTip(
+      `<b>Seed ${d.seed}</b><br>PAKE: ${d.pake >= 0 ? '+' : ''}${d.pake}<br>${d.pake >= 0 ? 'Overperforms' : 'Underperforms'} vs. expectation`,
+      event
+    ))
+    .on('mouseout', hideTip);
 }
 
-// VIEW 5 — SCORE MARGIN BOX PLOT
-function buildMarginChart() {
-  const games = filteredGames();
-  const roundKeys = activeRound==='all' ? ROUND_ORDER : [activeRound];
 
-  const groups = roundKeys.flatMap(r =>
-    [true,false].map(isUpset => {
-      const vals = games.filter(d=>d.round===r&&d.is_upset===isUpset).map(d=>d.margin).sort((a,b)=>a-b);
-      if (vals.length<1) return null;
-      const q1=d3.quantile(vals,.25), med=d3.quantile(vals,.5), q3=d3.quantile(vals,.75);
-      const iqr=q3-q1;
-      return { round:r, roundName:ROUND_NAMES[r], isUpset, q1, med, q3,
-               lo:Math.max(d3.min(vals),q1-1.5*iqr), hi:Math.min(d3.max(vals),q3+1.5*iqr), n:vals.length };
-    }).filter(Boolean)
-  );
+// =============================================================
+// CHART 4 — STRIP PLOT (replaces box plot)
+//
+// Each dot = one game's point margin.
+// Red dots = upsets, blue dots = expected outcomes.
+// A short horizontal bar shows the median for each group.
+//
+// Why strip plots over box plots?
+// Box plots compress all the data into 5 numbers, which can
+// hide the actual shape. Strip plots show every game, so you
+// can see clustering, outliers, and density directly.
+//
+// Caveat noted in the prose: teams on deep runs contribute
+// multiple dots to the upset column, which can skew perception.
+// =============================================================
+function buildMarginChart() {
+  const games = getFilteredGames();
+
+  // Which rounds to show
+  const roundsToShow = activeRound === 'all' ? ROUND_ORDER : [activeRound];
+
+  // Build one entry per game, tagged with round and upset status
+  const plotData = [];
+  roundsToShow.forEach(roundCode => {
+    games
+      .filter(g => g.round === roundCode)
+      .forEach(g => {
+        plotData.push({
+          roundName: ROUND_NAMES[roundCode],
+          isUpset:   g.isUpset,
+          margin:    g.margin
+        });
+      });
+  });
 
   const svg = d3.select('#margin-chart');
   svg.selectAll('*').remove();
-  if (!groups.length) return;
+  if (plotData.length === 0) return;
 
-  const W = Math.min(document.getElementById('margin-wrap').clientWidth||852,852), H=300;
-  const mg = {t:24,r:130,b:48,l:52};
-  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
-  svg.attr('width',W).attr('height',H);
-  const g = svg.append('g').attr('transform',`translate(${mg.l},${mg.t})`);
+  const wrapWidth = document.getElementById('margin-wrap').clientWidth || 852;
+  const W = Math.min(wrapWidth, 852);
+  const H = 320;
 
-  const xOuter = d3.scaleBand().domain([...new Set(groups.map(d=>d.roundName))]).range([0,iW]).padding(0.3);
-  const xInner = d3.scaleBand().domain(['upset','expected']).range([0,xOuter.bandwidth()]).padding(0.1);
-  const y = d3.scaleLinear().domain([0,d3.max(groups,d=>d.hi)*1.1]).range([iH,0]).nice();
+  const mg = { top: 24, right: 130, bottom: 48, left: 52 };
+  const innerW = W - mg.left - mg.right;
+  const innerH = H - mg.top  - mg.bottom;
 
-  g.append('g').call(d3.axisLeft(y).ticks(5).tickSize(-iW)).call(styleAxis);
-  g.append('g').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(xOuter)).call(styleAxisNoLine);
-  g.append('text').attr('transform','rotate(-90)').attr('x',-iH/2).attr('y',-40)
-    .attr('text-anchor','middle').attr('font-size','11px').attr('font-family',SF).attr('fill','#718096')
+  svg.attr('width', W).attr('height', H);
+  const g = svg.append('g').attr('transform', `translate(${mg.left}, ${mg.top})`);
+
+  // --- SCALES ---
+  const roundNames = [...new Set(plotData.map(d => d.roundName))];
+
+  // Outer x: one band per round
+  const xOuter = d3.scaleBand()
+    .domain(roundNames)
+    .range([0, innerW])
+    .padding(0.25);
+
+  // Inner x: two sub-bands per round (upset | expected)
+  const xInner = d3.scaleBand()
+    .domain(['upset', 'expected'])
+    .range([0, xOuter.bandwidth()])
+    .padding(0.15);
+
+  // y: point margin
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(plotData, d => d.margin) * 1.1])
+    .range([innerH, 0])
+    .nice();
+
+  // --- AXES ---
+  g.append('g')
+    .call(d3.axisLeft(yScale).ticks(5).tickSize(-innerW))
+    .call(styleAxisWithGrid);
+
+  g.append('g')
+    .attr('transform', `translate(0, ${innerH})`)
+    .call(d3.axisBottom(xOuter))
+    .call(styleAxisLabelsOnly);
+
+  g.append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('x', -innerH / 2)
+    .attr('y', -40)
+    .attr('text-anchor', 'middle')
+    .attr('font-size',   '11px')
+    .attr('font-family', FONT)
+    .attr('fill', '#718096')
     .text('Point margin');
 
-  groups.forEach(d => {
-    const xBase = xOuter(d.roundName)+xInner(d.isUpset?'upset':'expected');
-    const bw = xInner.bandwidth(), col = d.isUpset?'#e94560':'steelblue', cx = xBase+bw/2;
-    [[d.lo,d.q1],[d.q3,d.hi]].forEach(([v1,v2])=>
-      g.append('line').attr('x1',cx).attr('x2',cx).attr('y1',y(v1)).attr('y2',y(v2)).attr('stroke',col).attr('stroke-width',1.5));
-    [d.lo,d.hi].forEach(v=>
-      g.append('line').attr('x1',cx-5).attr('x2',cx+5).attr('y1',y(v)).attr('y2',y(v)).attr('stroke',col).attr('stroke-width',1.5));
-    g.append('rect').attr('x',xBase).attr('y',y(d.q3))
-      .attr('width',bw).attr('height',y(d.q1)-y(d.q3)).attr('rx',3)
-      .attr('fill',col).attr('opacity',.25).attr('stroke',col).attr('stroke-width',1.5);
-    g.append('line').attr('x1',xBase).attr('x2',xBase+bw)
-      .attr('y1',y(d.med)).attr('y2',y(d.med)).attr('stroke',col).attr('stroke-width',2.5);
-    g.append('rect').attr('x',xBase).attr('y',y(d.hi))
-      .attr('width',bw).attr('height',Math.max(1,y(d.lo)-y(d.hi))).attr('opacity',0).style('cursor','pointer')
-      .on('mouseover',e=>showTip(`<b>${d.roundName}</b> — ${d.isUpset?'Upset':'Expected'}<br>Median: ${d.med.toFixed(1)} pts<br>IQR: ${d.q1.toFixed(1)}–${d.q3.toFixed(1)}<br>n = ${d.n}`,e))
-      .on('mouseout',hideTip);
+  // --- DOTS ---
+  // Add a small random horizontal jitter so dots don't stack on top of each other
+  // Math.random() gives 0–1; we center it around 0 by subtracting 0.5
+  const jitterWidth = xInner.bandwidth() * 0.7;
+
+  plotData.forEach(d => {
+    const col    = d.isUpset ? COLOR_UPSET : COLOR_EXPECT;
+    const xBase  = xOuter(d.roundName) + xInner(d.isUpset ? 'upset' : 'expected');
+    const center = xBase + xInner.bandwidth() / 2;
+    const jitter = (Math.random() - 0.5) * jitterWidth;
+
+    g.append('circle')
+      .attr('cx', center + jitter)
+      .attr('cy', yScale(d.margin))
+      .attr('r',  3)
+      .attr('fill',    col)
+      .attr('opacity', 0.45)
+      .on('mouseover', event => showTip(
+        `<b>${d.roundName}</b> — ${d.isUpset ? 'Upset' : 'Expected'}<br>Margin: ${d.margin} pts`,
+        event
+      ))
+      .on('mouseout', hideTip);
   });
 
-  const leg = svg.append('g').attr('transform',`translate(${W-mg.r+20},${mg.t+10})`);
-  [{label:'Upset',col:'#e94560'},{label:'Expected',col:'steelblue'}].forEach((item,i)=>{
-    leg.append('rect').attr('x',0).attr('y',i*24).attr('width',12).attr('height',12).attr('rx',2).attr('fill',item.col).attr('opacity',.7);
-    leg.append('text').attr('x',18).attr('y',i*24+10).text(item.label)
-      .attr('font-size','11px').attr('font-family',SF).attr('fill','#4a5568');
+  // --- MEDIAN LINES ---
+  // For each round + category, draw a short bold line at the median value
+  roundNames.forEach(roundName => {
+    ['upset', 'expected'].forEach(type => {
+      const isUpset = type === 'upset';
+      const vals = plotData
+        .filter(d => d.roundName === roundName && d.isUpset === isUpset)
+        .map(d => d.margin)
+        .sort((a, b) => a - b);
+
+      if (vals.length === 0) return;
+
+      const med   = d3.quantile(vals, 0.5);
+      const xBase = xOuter(roundName) + xInner(type);
+      const col   = isUpset ? COLOR_UPSET : COLOR_EXPECT;
+
+      // Median line spans the full inner band width
+      g.append('line')
+        .attr('x1', xBase)
+        .attr('x2', xBase + xInner.bandwidth())
+        .attr('y1', yScale(med))
+        .attr('y2', yScale(med))
+        .attr('stroke',       col)
+        .attr('stroke-width', 2.5)
+        .attr('opacity',      0.9);
+
+      // Small invisible rect for hover
+      g.append('rect')
+        .attr('x',       xBase)
+        .attr('y',       yScale(med) - 6)
+        .attr('width',   xInner.bandwidth())
+        .attr('height',  12)
+        .attr('opacity', 0)
+        .on('mouseover', event => showTip(
+          `<b>${roundName}</b> — ${isUpset ? 'Upset' : 'Expected'}<br>Median: ${med.toFixed(1)} pts<br>n = ${vals.length}`,
+          event
+        ))
+        .on('mouseout', hideTip);
+    });
   });
+
+  // --- LEGEND ---
+  const legend = svg.append('g')
+    .attr('transform', `translate(${W - mg.right + 20}, ${mg.top + 10})`);
+
+  [
+    { label: 'Upset',    color: COLOR_UPSET  },
+    { label: 'Expected', color: COLOR_EXPECT }
+  ].forEach((item, i) => {
+    legend.append('circle')
+      .attr('cx', 6).attr('cy', i * 24 + 6)
+      .attr('r', 5)
+      .attr('fill',    item.color)
+      .attr('opacity', 0.8);
+
+    legend.append('text')
+      .attr('x', 18).attr('y', i * 24 + 10)
+      .text(item.label)
+      .attr('font-size',   '11px')
+      .attr('font-family', FONT)
+      .attr('fill', '#4a5568');
+  });
+
+  // Legend: median line symbol
+  legend.append('line')
+    .attr('x1', 0).attr('x2', 12)
+    .attr('y1', 2 * 24 + 6).attr('y2', 2 * 24 + 6)
+    .attr('stroke', '#4a5568').attr('stroke-width', 2.5);
+
+  legend.append('text')
+    .attr('x', 18).attr('y', 2 * 24 + 10)
+    .text('Median')
+    .attr('font-size',   '11px')
+    .attr('font-family', FONT)
+    .attr('fill', '#4a5568');
 }
 
+
+// =============================================================
+// INITIAL RENDER — build all four charts on page load
+// =============================================================
 buildTimeline();
 buildHeatmap();
 buildSeedProfile();
