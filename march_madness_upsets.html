@@ -2,372 +2,438 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>March Madness Upsets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Anatomy of the Upset — March Madness 2008–2025</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="data.js"></script>
 <style>
-  body {
-    font-family: sans-serif;
-    margin: 20px;
-    background: #fff;
-    color: #222;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: #fff; color: #1a1a2e; line-height: 1.7; }
+
+  .hero {
+    background: #0f3460; color: #fff;
+    padding: 80px 24px 64px; text-align: center;
   }
-
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  p.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
-
-  .section-label {
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #444;
-    margin-bottom: 6px;
+  .hero h1 {
+    font-size: clamp(28px,5vw,52px); font-weight: 700;
+    font-family: system-ui,sans-serif; letter-spacing: -.5px; margin-bottom: 10px;
   }
-
-  #timeline-container { margin-bottom: 24px; }
-  .bar { fill: steelblue; cursor: pointer; }
-  .bar.dimmed { fill: #ccc; }
-  .bar:hover { fill: #2a6090; }
-
-  #filters { margin-bottom: 16px; }
-  button {
-    margin-right: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
-    cursor: pointer;
-    border: 1px solid #aaa;
-    background: #fff;
-    border-radius: 3px;
+  .hero .byline {
+    font-family: system-ui,sans-serif; font-size: 13px;
+    letter-spacing: 1.5px; text-transform: uppercase; color: #a0c4ff; margin-bottom: 24px;
   }
-  button.active {
-    background: steelblue;
-    color: white;
-    border-color: steelblue;
-  }
+  .hero .intro { max-width: 620px; margin: 0 auto; font-size: 17px; color: #d0e4ff; line-height: 1.8; }
 
-  #heatmap-container { margin-bottom: 24px; }
-  .cell rect { cursor: pointer; stroke: #fff; stroke-width: 1px; }
-  .cell rect:hover { opacity: 0.75; }
-  .cell text { pointer-events: none; font-size: 10px; fill: #333; }
+  .sticky-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: #fff; border-bottom: 1px solid #e2e8f0;
+    padding: 10px 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .sticky-bar .filter-label {
+    font-family: system-ui,sans-serif; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: #718096; margin-right: 4px;
+  }
+  .sticky-bar button {
+    font-family: system-ui,sans-serif; font-size: 12px; padding: 4px 12px;
+    border: 1px solid #cbd5e0; border-radius: 20px; background: #fff;
+    color: #4a5568; cursor: pointer; transition: all .15s;
+  }
+  .sticky-bar button:hover { border-color: #0f3460; color: #0f3460; }
+  .sticky-bar button.active { background: #0f3460; color: #fff; border-color: #0f3460; }
+  .year-range-display { margin-left: auto; font-family: system-ui,sans-serif; font-size: 12px; color: #718096; }
+
+  .page-section { max-width: 900px; margin: 0 auto; padding: 64px 24px 48px; }
+  .page-section + .page-section { border-top: 1px solid #edf2f7; }
+
+  .prose { max-width: 640px; margin: 0 auto 32px; }
+  .prose h2 {
+    font-family: system-ui,sans-serif; font-size: clamp(20px,3vw,28px);
+    font-weight: 800; color: #0f3460; margin-bottom: 12px; line-height: 1.3;
+  }
+  .prose p { font-size: 16px; color: #2d3748; margin-bottom: 12px; }
+  .prose .caption { font-family: system-ui,sans-serif; font-size: 12px; color: #a0aec0; margin-top: 8px; }
+
+  .viz-wrap { margin: 0 auto; overflow-x: auto; }
 
   #tooltip {
-    position: fixed;
-    background: white;
-    border: 1px solid #aaa;
-    padding: 8px 10px;
-    font-size: 12px;
-    pointer-events: none;
-    opacity: 0;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    position: fixed; background: #1a1a2e; color: #fff;
+    border-radius: 6px; padding: 8px 12px; font-family: system-ui,sans-serif;
+    font-size: 12px; pointer-events: none; opacity: 0;
+    transition: opacity .1s; z-index: 999; line-height: 1.6;
   }
 
-  #drilldown { font-size: 13px; }
-  #drilldown h3 { margin-bottom: 8px; }
-  table { border-collapse: collapse; width: 100%; max-width: 500px; }
-  th, td { border: 1px solid #ddd; padding: 5px 10px; text-align: left; }
-  th { background: #f0f0f0; font-size: 12px; }
-  td { font-size: 12px; }
+  #drilldown { max-width: 640px; margin: 24px auto 0; font-family: system-ui,sans-serif; }
+  #drilldown h3 { font-size: 14px; font-weight: 700; color: #0f3460; margin-bottom: 10px; }
+  #drilldown table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  #drilldown th {
+    background: #f7fafc; border-bottom: 2px solid #e2e8f0;
+    padding: 6px 10px; text-align: left; color: #4a5568; font-weight: 700;
+  }
+  #drilldown td { padding: 6px 10px; border-bottom: 1px solid #edf2f7; color: #2d3748; }
+  #drilldown tr:last-child td { border-bottom: none; }
+
+  footer {
+    text-align: center; padding: 40px 24px;
+    font-family: system-ui,sans-serif; font-size: 12px;
+    color: #a0aec0; border-top: 1px solid #edf2f7;
+  }
+  footer a { color: #0f3460; text-decoration: none; }
 </style>
 </head>
 <body>
 
-<h1>March Madness Upset Explorer</h1>
-<p class="sub">2008–2025 · NCAA Tournament</p>
+<header class="hero">
+  <h1>A Look into the Upsets</h1>
+  <p class="byline">March Madness &nbsp;·&nbsp; 2008–2025 &nbsp;·&nbsp; NCAA Tournament</p>
+  <p class="intro">Every March, millions of brackets are filled out — and promptly destroyed. Upsets are the lifeblood of the NCAA Tournament, turning unknowns into legends and favorites into footnotes. This is the story of who upsets whom, when, and by how much.</p>
+</header>
 
-<div id="timeline-container">
-  <div class="section-label">Upsets per year (drag to filter)</div>
-  <svg id="timeline"></svg>
-</div>
-
-<div id="filters">
-  <div class="section-label">Filter by round</div>
-  <button class="active" data-round="all">All Rounds</button>
-  <button data-round="64">Round of 64</button>
-  <button data-round="32">Round of 32</button>
+<div class="sticky-bar">
+  <span class="filter-label">Round</span>
+  <button class="active" data-round="all">All</button>
+  <button data-round="64">R64</button>
+  <button data-round="32">R32</button>
   <button data-round="16">Sweet 16</button>
   <button data-round="8">Elite 8</button>
   <button data-round="4">Final Four</button>
+  <span class="year-range-display" id="year-display">2008 – 2025</span>
 </div>
 
-<div id="heatmap-container">
-  <div class="section-label">Upset count by seed matchup (click a cell)</div>
-  <svg id="heatmap"></svg>
-</div>
+<section class="page-section">
+  <div class="prose">
+    <h2>When do upsets happen?</h2>
+    <p>It's rare that any single year goes according to anyone's plan. That might be the reason why no one has ever gotten a perfect bracket. In 2022–2023 the tournament resulted in 17 upsets. Just as an example: the pandemic-shortened bubble resulted in a shorter NCAA as well as NBA season. Drag across the bars below to zoom into any range of years; every chart on this page will update.</p>
+  </div>
+  <div class="viz-wrap" id="timeline-wrap"><svg id="timeline"></svg></div>
+  <div class="prose"><p class="caption">Drag to filter years — all charts below update accordingly.</p></div>
+</section>
 
-<div id="drilldown">
-  <h3 id="drilldown-title">Click a cell to see individual games</h3>
-  <div id="drilldown-content"></div>
-</div>
+<section class="page-section">
+  <div class="prose">
+    <h2>Which matchups produce the most chaos?</h2>
+    <p>All upsets are created differently. A 5-seed loss to a 12-seed is almost something to be expected. Though a 1-seed losing to a 16-seed? That is something that is a little more out of the ordinary. The heatmap maps every single seed-vs-seed upset combination between the years and rounds. Darker cells indicate an increased concentration of upsets. Hover over any cell to see the upset count, or click it to explore the individual games below.</p>
+  </div>
+  <div class="viz-wrap" id="heatmap-wrap"><svg id="heatmap"></svg></div>
+  <div id="drilldown">
+    <h3 id="drilldown-title">Click a cell to see individual games</h3>
+    <div id="drilldown-content"></div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="prose">
+    <h2>Which seeds are actually dangerous?</h2>
+    <p>The win percentage isn't the only thing to measure. The PAKE score - denoted as Performance Above Kenpom Expectation - shows the seeds that are consistently punching above their own weight. A positive PAKE value indicates the seed is going to win more often than their strength-of-schedule would suggest. This is the hallmark of a potentially dangerous underdog.</p>
+  </div>
+  <div class="viz-wrap" id="seedprofile-wrap"><svg id="seed-profile"></svg></div>
+  <div class="prose"><p class="caption">Bar = historical win rate. Dot = PAKE score (green = overperforms, red = underperforms vs. expectation).</p></div>
+</section>
+
+<section class="page-section">
+  <div class="prose">
+    <h2>How close are these games?</h2>
+    <p>Upsets are always shocking - though are they decided by a narrow margin or a true Cinderella story? The box plot below is going to show those differences by comparing the score differentials between the upsets versus the expected outcome games by round. Each box is spanning the middle 50% of the games; the middle line is the median.</p>
+  </div>
+  <div class="viz-wrap" id="margin-wrap"><svg id="margin-chart"></svg></div>
+  <div class="prose"><p class="caption">Box spans 25th–75th percentile. Line = median. Whiskers extend to 1.5× IQR.</p></div>
+</section>
+
+<footer>
+  Data: <a href="https://www.kaggle.com/datasets/nishaanamin/march-madness-data" target="_blank">Kaggle — March Madness Data</a>
+  &nbsp;·&nbsp; NCAA Tournament 2008–2025 &nbsp;·&nbsp; Built with D3.js
+</footer>
 
 <div id="tooltip"></div>
 
 <script>
-const ROUND_NAMES = {
-  '64': 'Round of 64', '32': 'Round of 32',
-  '16': 'Sweet 16', '8': 'Elite 8', '4': 'Final Four', '2': 'Championship'
-};
+const ROUND_NAMES = {'64':'Round of 64','32':'Round of 32','16':'Sweet 16','8':'Elite 8','4':'Final Four'};
+const ROUND_ORDER = ['64','32','16','8','4'];
 
+// shared axis/label styling helpers
+const SF = 'system-ui,sans-serif';
+function styleAxis(ax) {
+  ax.select('.domain').remove();
+  ax.selectAll('line').attr('stroke','#edf2f7');
+  ax.selectAll('text').style('font-size','10px').style('font-family',SF).attr('fill','#718096');
+}
+function styleAxisNoLine(ax) {
+  ax.select('.domain').remove();
+  ax.selectAll('line').remove();
+  ax.selectAll('text').style('font-size','10px').style('font-family',SF).attr('fill','#718096');
+}
+function makeSvg(id, W, H, mg) {
+  const svg = d3.select('#'+id).attr('width',W).attr('height',H);
+  svg.selectAll('*').remove();
+  return { svg, g: svg.append('g').attr('transform',`translate(${mg.l},${mg.t})`) };
+}
+function label(g, x, y, txt, anchor='middle', size='10px', color='#a0aec0') {
+  g.append('text').attr('x',x).attr('y',y).attr('text-anchor',anchor)
+    .attr('font-size',size).attr('font-family',SF).attr('fill',color).text(txt);
+}
+
+// parse game records from raw matchup rows
 let GAMES = [];
-let UPSET_COUNT = [];
-let yearRange = [2008, 2025];
-let activeRound = 'all';
-let allYears = [];
-
-// ── LOAD CSVs THEN INIT ───────────────────────────────────────────────────────
-Promise.all([
-  d3.csv("Tournament Matchups.csv"),
-  d3.csv("Upset Count.csv")
-]).then(([matchups, upsetCount]) => {
-
-  UPSET_COUNT = upsetCount;
-
-  // Parse matchups into games
-  // Each game = two consecutive rows sharing the same CURRENT ROUND + YEAR
-  // Group by (YEAR, CURRENT ROUND), then pair by consecutive BY YEAR NO
-  const completed = matchups.filter(d => d.SCORE !== '');
-
-  const groups = d3.group(completed, d => d.YEAR + '_' + d['CURRENT ROUND']);
-
-  groups.forEach((rows) => {
-    // Sort by BY YEAR NO descending — pairs are adjacent
-    rows.sort((a, b) => +b['BY YEAR NO'] - +a['BY YEAR NO']);
-    for (let i = 0; i < rows.length - 1; i += 2) {
-      const t1 = rows[i], t2 = rows[i + 1];
-      const s1 = +t1.SCORE, s2 = +t2.SCORE;
-      if (!s1 || !s2) continue;
-
-      const winner = s1 > s2 ? t1 : t2;
-      const loser  = s1 > s2 ? t2 : t1;
-      const ws = +winner.SEED, ls = +loser.SEED;
-      const isUpset = ws > ls;
-
+(function() {
+  const done = RAW_MATCHUPS.filter(d => d.SCORE !== '');
+  d3.group(done, d => d.YEAR+'_'+d['CURRENT ROUND']).forEach(rows => {
+    rows.sort((a,b) => +b['BY YEAR NO'] - +a['BY YEAR NO']);
+    for (let i = 0; i < rows.length-1; i += 2) {
+      const [t1,t2] = [rows[i],rows[i+1]];
+      const [s1,s2] = [+t1.SCORE, +t2.SCORE];
+      if (!s1||!s2) continue;
+      const [win,lose] = s1>s2 ? [t1,t2] : [t2,t1];
+      const [ws,ls] = [+win.SEED, +lose.SEED];
       GAMES.push({
-        year:         +t1.YEAR,
-        round:        t1['CURRENT ROUND'],
-        round_name:   ROUND_NAMES[t1['CURRENT ROUND']] || t1['CURRENT ROUND'],
-        winner:       winner.TEAM,
-        winner_seed:  ws,
-        winner_score: +winner.SCORE,
-        loser:        loser.TEAM,
-        loser_seed:   ls,
-        loser_score:  +loser.SCORE,
-        is_upset:     isUpset,
-        seed_diff:    isUpset ? ws - ls : 0
+        year: +t1.YEAR, round: t1['CURRENT ROUND'],
+        round_name: ROUND_NAMES[t1['CURRENT ROUND']] || t1['CURRENT ROUND'],
+        winner: win.TEAM, winner_seed: ws, winner_score: +win.SCORE,
+        loser: lose.TEAM,  loser_seed: ls,  loser_score: +lose.SCORE,
+        is_upset: ws > ls, margin: Math.abs(s1-s2)
       });
     }
   });
+})();
 
-  allYears = [...new Set(GAMES.map(d => d.year))].sort();
-  yearRange = [d3.min(allYears), d3.max(allYears)];
+const allYears = [...new Set(GAMES.map(d=>d.year))].sort((a,b)=>a-b);
+const UPSET_COUNT  = RAW_UPSET_COUNT.map(d=>({ year:+d.YEAR, total:+d.TOTAL }));
+const SEED_RESULTS = RAW_SEED_RESULTS.map(d=>({
+  seed:+d.SEED, pake:+d.PAKE, winPct:+d['WIN%'], games:+d.GAMES
+})).sort((a,b)=>a.seed-b.seed);
 
-  buildTimeline();
-  buildHeatmap();
+let yearRange   = [d3.min(allYears), d3.max(allYears)];
+let activeRound = 'all';
 
-}).catch(err => {
-  document.body.innerHTML = `
-    <h2>Could not load CSV files</h2>
-    <p>Make sure <b>Tournament_Matchups.csv</b> and <b>Upset_Count.csv</b> are in the same folder as this HTML file.</p>
-    <pre>${err}</pre>`;
+// tooltip
+const tip = document.getElementById('tooltip');
+const showTip = (html,e) => { tip.innerHTML=html; tip.style.opacity=1; tip.style.left=(e.clientX+14)+'px'; tip.style.top=(e.clientY-14)+'px'; };
+const hideTip = () => tip.style.opacity=0;
+
+const filteredGames  = () => GAMES.filter(d => d.year>=yearRange[0] && d.year<=yearRange[1] && (activeRound==='all'||d.round===activeRound));
+const filteredUpsets = () => filteredGames().filter(d=>d.is_upset);
+
+function updateYearDisplay() {
+  document.getElementById('year-display').textContent =
+    yearRange[0]===yearRange[1] ? String(yearRange[0]) : yearRange[0]+' – '+yearRange[1];
+}
+
+document.querySelectorAll('.sticky-bar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sticky-bar button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeRound = btn.dataset.round;
+    clearDrilldown(); buildHeatmap(); buildMarginChart();
+  });
 });
 
-// ── HELPERS ───────────────────────────────────────────────────────────────────
-function filteredUpsets() {
-  return GAMES.filter(d =>
-    d.is_upset &&
-    d.year >= yearRange[0] && d.year <= yearRange[1] &&
-    (activeRound === 'all' || d.round === activeRound)
+// VIEW 1 — TIMELINE
+function buildTimeline() {
+  const W = Math.min(document.getElementById('timeline-wrap').clientWidth||852,852), H=130;
+  const mg = {t:14,r:20,b:30,l:44};
+  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
+  const {svg,g} = makeSvg('timeline',W,H,mg);
+
+  const counts = allYears.map(y=>({ year:y, count: UPSET_COUNT.find(d=>d.year===y)?.total||0 }));
+  const x = d3.scaleBand().domain(allYears).range([0,iW]).padding(0.25);
+  const y = d3.scaleLinear().domain([0,d3.max(counts,d=>d.count)*1.15]).range([iH,0]).nice();
+
+  g.append('g').attr('transform',`translate(0,${iH})`)
+    .call(d3.axisBottom(x).tickFormat(d=>`'${String(d).slice(2)}`))
+    .call(styleAxisNoLine);
+  g.append('g').call(d3.axisLeft(y).ticks(4).tickSize(-iW)).call(styleAxis);
+
+  const bars = g.selectAll('.bar').data(counts).join('rect').attr('class','bar')
+    .attr('x',d=>x(d.year)).attr('y',d=>y(d.count))
+    .attr('width',x.bandwidth()).attr('height',d=>iH-y(d.count)).attr('rx',2)
+    .attr('fill',d=>(d.year>=yearRange[0]&&d.year<=yearRange[1])?'#0f3460':'#d0e4ff')
+    .on('mouseover',(e,d)=>showTip(`<b>${d.year}</b><br>${d.count} upsets`,e))
+    .on('mouseout',hideTip);
+
+  g.append('g').attr('class','brush').call(
+    d3.brushX().extent([[0,0],[iW,iH]]).on('brush end', event => {
+      if (!event.selection) {
+        yearRange = [d3.min(allYears),d3.max(allYears)];
+      } else {
+        const [x0,x1] = event.selection;
+        const inRange = allYears.filter(yr=>x(yr)+x.bandwidth()>x0&&x(yr)<x1);
+        yearRange = inRange.length ? [Math.min(...inRange),Math.max(...inRange)] : [d3.min(allYears),d3.max(allYears)];
+      }
+      updateYearDisplay();
+      bars.attr('fill',d=>(d.year>=yearRange[0]&&d.year<=yearRange[1])?'#0f3460':'#d0e4ff');
+      clearDrilldown(); buildHeatmap(); buildMarginChart();
+    })
   );
 }
 
-const tip = document.getElementById('tooltip');
-function showTip(html, e) {
-  tip.innerHTML = html;
-  tip.style.opacity = 1;
-  tip.style.left = (e.clientX + 12) + 'px';
-  tip.style.top  = (e.clientY - 10) + 'px';
-}
-function hideTip() { tip.style.opacity = 0; }
-
-// ── TIMELINE ──────────────────────────────────────────────────────────────────
-function buildTimeline() {
-  const W = 700, H = 80;
-  const margin = { top: 10, right: 20, bottom: 24, left: 40 };
-  const iW = W - margin.left - margin.right;
-  const iH = H - margin.top - margin.bottom;
-
-  const svg = d3.select('#timeline').attr('width', W).attr('height', H);
-  svg.selectAll('*').remove();
-  const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
-
-  const yearCounts = allYears.map(y => ({
-    year: y,
-    count: +(UPSET_COUNT.find(d => +d.YEAR === y)?.TOTAL || 0)
-  }));
-
-  const x = d3.scaleBand().domain(allYears).range([0, iW]).padding(0.2);
-  const y = d3.scaleLinear().domain([0, d3.max(yearCounts, d => d.count)]).range([iH, 0]);
-
-  g.selectAll('.bar')
-    .data(yearCounts)
-    .join('rect')
-    .attr('class', d => `bar${d.year < yearRange[0] || d.year > yearRange[1] ? ' dimmed' : ''}`)
-    .attr('x', d => x(d.year))
-    .attr('y', d => y(d.count))
-    .attr('width', x.bandwidth())
-    .attr('height', d => iH - y(d.count))
-    .on('mouseover', (e, d) => showTip(`${d.year}: ${d.count} upsets`, e))
-    .on('mouseout', hideTip);
-
-  g.append('g').attr('transform', `translate(0,${iH})`)
-    .call(d3.axisBottom(x).tickFormat(d => `'${String(d).slice(2)}`))
-    .call(ax => ax.select('.domain').remove())
-    .call(ax => ax.selectAll('line').remove());
-
-  const brush = d3.brushX()
-    .extent([[0, 0], [iW, iH]])
-    .on('end', event => {
-      if (!event.selection) {
-        yearRange = [d3.min(allYears), d3.max(allYears)];
-      } else {
-        const [x0, x1] = event.selection;
-        const inRange = allYears.filter(y => x(y) + x.bandwidth() > x0 && x(y) < x1);
-        yearRange = inRange.length ? [Math.min(...inRange), Math.max(...inRange)] : [d3.min(allYears), d3.max(allYears)];
-      }
-      buildTimeline();
-      buildHeatmap();
-      clearDrilldown();
-    });
-
-  g.append('g').call(brush);
-}
-
-// ── HEATMAP ───────────────────────────────────────────────────────────────────
+// VIEW 2 — HEATMAP
 function buildHeatmap() {
   const upsets = filteredUpsets();
   const countMap = {};
-  upsets.forEach(d => {
-    const k = `${d.winner_seed}-${d.loser_seed}`;
-    countMap[k] = (countMap[k] || 0) + 1;
-  });
+  upsets.forEach(d => { const k=`${d.winner_seed}-${d.loser_seed}`; countMap[k]=(countMap[k]||0)+1; });
 
-  const loserSeeds  = d3.range(1, 16);
-  const winnerSeeds = d3.range(2, 17);
+  const lSeeds = d3.range(1,16), wSeeds = d3.range(2,17);
+  const cells = lSeeds.flatMap(ls => wSeeds.filter(ws=>ws>ls).map(ws=>({ ls,ws, count:countMap[`${ws}-${ls}`]||0 })));
+  const maxCount = d3.max(cells,d=>d.count)||1;
 
-  const cells = [];
-  loserSeeds.forEach(ls => {
-    winnerSeeds.forEach(ws => {
-      if (ws > ls) cells.push({ ls, ws, count: countMap[`${ws}-${ls}`] || 0 });
-    });
-  });
+  const cell=32, pad=2, mg={t:36,l:36,r:16,b:16};
+  const W = mg.l+15*(cell+pad)+mg.r, H = mg.t+15*(cell+pad)+mg.b;
+  const {svg,g} = makeSvg('heatmap',W,H,mg);
+  const color = d3.scaleSequential([0,maxCount],d3.interpolateBlues);
 
-  const cell = 30, pad = 2;
-  const margin = { top: 30, left: 30, right: 10, bottom: 10 };
-  const W = margin.left + 15 * (cell + pad) + margin.right;
-  const H = margin.top + 15 * (cell + pad) + margin.bottom;
+  lSeeds.forEach((s,i)=>label(g,i*(cell+pad)+cell/2,-10,s));
+  wSeeds.forEach((s,i)=>g.append('text').attr('x',-8).attr('y',i*(cell+pad)+cell/2+4)
+    .attr('text-anchor','end').attr('font-size','10px').attr('font-family',SF).attr('fill','#718096').text(s));
+  label(svg, mg.l+15*(cell+pad)/2, 14, 'Favored seed (lost) →');
+  svg.append('text').attr('transform','rotate(-90)')
+    .attr('x',-(mg.t+15*(cell+pad)/2)).attr('y',12)
+    .attr('text-anchor','middle').attr('font-size','10px').attr('font-family',SF).attr('fill','#a0aec0')
+    .text('Upset winner seed →');
 
-  const color = d3.scaleSequential()
-    .domain([0, d3.max(cells, d => d.count) || 1])
-    .interpolator(d3.interpolateBlues);
+  const cellG = g.selectAll('.cell').data(cells).join('g').attr('class','cell')
+    .attr('transform',d=>`translate(${lSeeds.indexOf(d.ls)*(cell+pad)},${wSeeds.indexOf(d.ws)*(cell+pad)})`);
 
-  const svg = d3.select('#heatmap').attr('width', W).attr('height', H);
-  svg.selectAll('*').remove();
-  const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+  cellG.append('rect').attr('width',cell).attr('height',cell).attr('rx',3)
+    .attr('fill',d=>d.count?color(d.count):'#f7fafc')
+    .attr('stroke','#fff').attr('stroke-width',1.5)
+    .style('cursor',d=>d.count?'pointer':'default');
 
-  loserSeeds.forEach((s, i) => {
-    g.append('text').attr('x', i*(cell+pad)+cell/2).attr('y', -8)
-      .attr('text-anchor','middle').attr('font-size','10px').attr('fill','#555').text(s);
-  });
-  winnerSeeds.forEach((s, i) => {
-    g.append('text').attr('x', -6).attr('y', i*(cell+pad)+cell/2+4)
-      .attr('text-anchor','end').attr('font-size','10px').attr('fill','#555').text(s);
-  });
-
-  const cellG = g.selectAll('.cell')
-    .data(cells)
-    .join('g')
-    .attr('class', 'cell')
-    .attr('transform', d => {
-      const xi = loserSeeds.indexOf(d.ls);
-      const yi = winnerSeeds.indexOf(d.ws);
-      return `translate(${xi*(cell+pad)},${yi*(cell+pad)})`;
-    });
-
-  cellG.append('rect')
-    .attr('width', cell).attr('height', cell).attr('rx', 2)
-    .attr('fill', d => d.count === 0 ? '#f5f5f5' : color(d.count));
-
-  cellG.filter(d => d.count > 0)
-    .append('text')
-    .attr('x', cell/2).attr('y', cell/2+4)
-    .attr('text-anchor','middle')
-    .text(d => d.count);
+  cellG.filter(d=>d.count>0).append('text')
+    .attr('x',cell/2).attr('y',cell/2+4).attr('text-anchor','middle')
+    .attr('font-size','9px').attr('font-family',SF)
+    .attr('fill',d=>d.count>maxCount*.6?'#fff':'#2d3748').text(d=>d.count);
 
   cellG
-    .on('mouseover', (e, d) => {
-      if (!d.count) return;
-      showTip(`Seed ${d.ws} upsets Seed ${d.ls}<br>${d.count} time${d.count>1?'s':''}`, e);
-    })
-    .on('mouseout', hideTip)
-    .on('click', (e, d) => {
-      if (!d.count) return;
-      showDrilldown(d.ws, d.ls);
-    });
-
-  svg.append('text').attr('x', margin.left + 15*(cell+pad)/2).attr('y', 12)
-    .attr('text-anchor','middle').attr('font-size','10px').attr('fill','#888')
-    .text('Favored seed (lost) →');
-  svg.append('text')
-    .attr('transform','rotate(-90)')
-    .attr('x', -(margin.top + 15*(cell+pad)/2)).attr('y', 10)
-    .attr('text-anchor','middle').attr('font-size','10px').attr('fill','#888')
-    .text('Upset winner seed →');
+    .on('mouseover',(e,d)=>{ if(d.count) showTip(`Seed <b>${d.ws}</b> upsets Seed <b>${d.ls}</b><br>${d.count} time${d.count>1?'s':''}`,e); })
+    .on('mouseout',hideTip)
+    .on('click',(e,d)=>{ if(d.count) showDrilldown(d.ws,d.ls); });
 }
 
-// ── DRILLDOWN ─────────────────────────────────────────────────────────────────
-function showDrilldown(ws, ls) {
-  const games = filteredUpsets()
-    .filter(d => d.winner_seed === ws && d.loser_seed === ls)
-    .sort((a, b) => b.year - a.year);
-
+// VIEW 3 — DRILLDOWN TABLE
+function showDrilldown(ws,ls) {
+  const games = filteredUpsets().filter(d=>d.winner_seed===ws&&d.loser_seed===ls).sort((a,b)=>b.year-a.year);
   document.getElementById('drilldown-title').textContent =
-    `Seed ${ws} upsets Seed ${ls} — ${games.length} game${games.length !== 1 ? 's' : ''}`;
-
-  if (!games.length) {
-    document.getElementById('drilldown-content').innerHTML = '<p>No games in selected range.</p>';
-    return;
-  }
-
-  const rows = games.map(g => `
-    <tr>
-      <td>${g.year}</td>
-      <td>${g.round_name}</td>
-      <td><b>${g.winner}</b> (${g.winner_seed})</td>
-      <td>${g.winner_score}–${g.loser_score}</td>
-      <td>${g.loser} (${g.loser_seed})</td>
-    </tr>`).join('');
-
-  document.getElementById('drilldown-content').innerHTML = `
-    <table>
-      <thead><tr><th>Year</th><th>Round</th><th>Winner</th><th>Score</th><th>Loser</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    `Seed ${ws} upsets Seed ${ls} — ${games.length} game${games.length!==1?'s':''}`;
+  document.getElementById('drilldown-content').innerHTML = games.length
+    ? `<table><thead><tr><th>Year</th><th>Round</th><th>Winner</th><th>Score</th><th>Loser</th></tr></thead><tbody>
+        ${games.map(g=>`<tr><td>${g.year}</td><td>${g.round_name}</td><td><b>${g.winner}</b> (${g.winner_seed})</td><td>${g.winner_score}–${g.loser_score}</td><td>${g.loser} (${g.loser_seed})</td></tr>`).join('')}
+       </tbody></table>`
+    : '<p style="color:#718096;font-size:13px">No games in selected range.</p>';
 }
-
 function clearDrilldown() {
-  document.getElementById('drilldown-title').textContent = 'Click a cell to see individual games';
-  document.getElementById('drilldown-content').innerHTML = '';
+  document.getElementById('drilldown-title').textContent='Click a cell to see individual games';
+  document.getElementById('drilldown-content').innerHTML='';
 }
 
-// ── ROUND FILTERS ─────────────────────────────────────────────────────────────
-document.querySelectorAll('#filters button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeRound = btn.dataset.round;
-    clearDrilldown();
-    buildHeatmap();
+// VIEW 4 — SEED PERFORMANCE PROFILE
+function buildSeedProfile() {
+  const W = Math.min(document.getElementById('seedprofile-wrap').clientWidth||852,852), H=400;
+  const mg = {t:20,r:170,b:40,l:52};
+  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
+  const {svg,g} = makeSvg('seed-profile',W,H,mg);
+
+  const x = d3.scaleLinear().domain([0,1]).range([0,iW]).nice();
+  const y = d3.scaleBand().domain(SEED_RESULTS.map(d=>d.seed)).range([0,iH]).padding(0.3);
+
+  g.append('g').attr('transform',`translate(0,${iH})`)
+    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')).tickSize(-iH)).call(styleAxis);
+  g.append('g').call(d3.axisLeft(y).tickFormat(d=>`#${d}`)).call(styleAxisNoLine);
+
+  const barColor = d => ['#0f3460','#3182ce','#e53e3e','#fc8181'][Math.min(Math.floor((d.seed-1)/4),3)];
+
+  g.selectAll('.bar').data(SEED_RESULTS).join('rect').attr('class','bar')
+    .attr('x',0).attr('y',d=>y(d.seed))
+    .attr('width',d=>x(d.winPct)).attr('height',y.bandwidth())
+    .attr('rx',3).attr('fill',barColor).attr('opacity',.85)
+    .on('mouseover',(e,d)=>showTip(`<b>Seed ${d.seed}</b><br>Win Rate: ${(d.winPct*100).toFixed(1)}%<br>PAKE: ${d.pake>=0?'+':''}${d.pake}<br>Games: ${d.games}`,e))
+    .on('mouseout',hideTip);
+
+  g.selectAll('.pct-label').data(SEED_RESULTS).join('text').attr('class','pct-label')
+    .attr('x',d=>x(d.winPct)+5).attr('y',d=>y(d.seed)+y.bandwidth()/2+4)
+    .text(d=>`${(d.winPct*100).toFixed(0)}%`)
+    .attr('font-size','10px').attr('font-family',SF).attr('fill','#718096');
+
+  const pakePad=1;
+  const pakeX = d3.scaleLinear()
+    .domain([d3.min(SEED_RESULTS,d=>d.pake)-pakePad, d3.max(SEED_RESULTS,d=>d.pake)+pakePad])
+    .range([iW+36, iW+150]);
+
+  g.append('line').attr('x1',pakeX(0)).attr('x2',pakeX(0)).attr('y1',-5).attr('y2',iH+5)
+    .attr('stroke','#cbd5e0').attr('stroke-dasharray','3,3');
+  label(g,(iW+36+iW+150)/2,-8,'PAKE score');
+
+  g.selectAll('.pake-dot').data(SEED_RESULTS).join('circle').attr('class','pake-dot')
+    .attr('cx',d=>pakeX(d.pake)).attr('cy',d=>y(d.seed)+y.bandwidth()/2)
+    .attr('r',5).attr('fill',d=>d.pake>=0?'#38a169':'#e53e3e')
+    .attr('stroke','#fff').attr('stroke-width',1.5)
+    .on('mouseover',(e,d)=>showTip(`<b>Seed ${d.seed}</b><br>PAKE: ${d.pake>=0?'+':''}${d.pake}<br>${d.pake>=0?'Overperforms':'Underperforms'} vs. expectation`,e))
+    .on('mouseout',hideTip);
+}
+
+// VIEW 5 — SCORE MARGIN BOX PLOT
+function buildMarginChart() {
+  const games = filteredGames();
+  const roundKeys = activeRound==='all' ? ROUND_ORDER : [activeRound];
+
+  const groups = roundKeys.flatMap(r =>
+    [true,false].map(isUpset => {
+      const vals = games.filter(d=>d.round===r&&d.is_upset===isUpset).map(d=>d.margin).sort((a,b)=>a-b);
+      if (vals.length<1) return null;
+      const q1=d3.quantile(vals,.25), med=d3.quantile(vals,.5), q3=d3.quantile(vals,.75);
+      const iqr=q3-q1;
+      return { round:r, roundName:ROUND_NAMES[r], isUpset, q1, med, q3,
+               lo:Math.max(d3.min(vals),q1-1.5*iqr), hi:Math.min(d3.max(vals),q3+1.5*iqr), n:vals.length };
+    }).filter(Boolean)
+  );
+
+  const svg = d3.select('#margin-chart');
+  svg.selectAll('*').remove();
+  if (!groups.length) return;
+
+  const W = Math.min(document.getElementById('margin-wrap').clientWidth||852,852), H=300;
+  const mg = {t:24,r:130,b:48,l:52};
+  const iW = W-mg.l-mg.r, iH = H-mg.t-mg.b;
+  svg.attr('width',W).attr('height',H);
+  const g = svg.append('g').attr('transform',`translate(${mg.l},${mg.t})`);
+
+  const xOuter = d3.scaleBand().domain([...new Set(groups.map(d=>d.roundName))]).range([0,iW]).padding(0.3);
+  const xInner = d3.scaleBand().domain(['upset','expected']).range([0,xOuter.bandwidth()]).padding(0.1);
+  const y = d3.scaleLinear().domain([0,d3.max(groups,d=>d.hi)*1.1]).range([iH,0]).nice();
+
+  g.append('g').call(d3.axisLeft(y).ticks(5).tickSize(-iW)).call(styleAxis);
+  g.append('g').attr('transform',`translate(0,${iH})`).call(d3.axisBottom(xOuter)).call(styleAxisNoLine);
+  g.append('text').attr('transform','rotate(-90)').attr('x',-iH/2).attr('y',-40)
+    .attr('text-anchor','middle').attr('font-size','11px').attr('font-family',SF).attr('fill','#718096')
+    .text('Point margin');
+
+  groups.forEach(d => {
+    const xBase = xOuter(d.roundName)+xInner(d.isUpset?'upset':'expected');
+    const bw = xInner.bandwidth(), col = d.isUpset?'#e94560':'steelblue', cx = xBase+bw/2;
+    [[d.lo,d.q1],[d.q3,d.hi]].forEach(([v1,v2])=>
+      g.append('line').attr('x1',cx).attr('x2',cx).attr('y1',y(v1)).attr('y2',y(v2)).attr('stroke',col).attr('stroke-width',1.5));
+    [d.lo,d.hi].forEach(v=>
+      g.append('line').attr('x1',cx-5).attr('x2',cx+5).attr('y1',y(v)).attr('y2',y(v)).attr('stroke',col).attr('stroke-width',1.5));
+    g.append('rect').attr('x',xBase).attr('y',y(d.q3))
+      .attr('width',bw).attr('height',y(d.q1)-y(d.q3)).attr('rx',3)
+      .attr('fill',col).attr('opacity',.25).attr('stroke',col).attr('stroke-width',1.5);
+    g.append('line').attr('x1',xBase).attr('x2',xBase+bw)
+      .attr('y1',y(d.med)).attr('y2',y(d.med)).attr('stroke',col).attr('stroke-width',2.5);
+    g.append('rect').attr('x',xBase).attr('y',y(d.hi))
+      .attr('width',bw).attr('height',Math.max(1,y(d.lo)-y(d.hi))).attr('opacity',0).style('cursor','pointer')
+      .on('mouseover',e=>showTip(`<b>${d.roundName}</b> — ${d.isUpset?'Upset':'Expected'}<br>Median: ${d.med.toFixed(1)} pts<br>IQR: ${d.q1.toFixed(1)}–${d.q3.toFixed(1)}<br>n = ${d.n}`,e))
+      .on('mouseout',hideTip);
   });
-});
+
+  const leg = svg.append('g').attr('transform',`translate(${W-mg.r+20},${mg.t+10})`);
+  [{label:'Upset',col:'#e94560'},{label:'Expected',col:'steelblue'}].forEach((item,i)=>{
+    leg.append('rect').attr('x',0).attr('y',i*24).attr('width',12).attr('height',12).attr('rx',2).attr('fill',item.col).attr('opacity',.7);
+    leg.append('text').attr('x',18).attr('y',i*24+10).text(item.label)
+      .attr('font-size','11px').attr('font-family',SF).attr('fill','#4a5568');
+  });
+}
+
+buildTimeline();
+buildHeatmap();
+buildSeedProfile();
+buildMarginChart();
 </script>
 </body>
 </html>
