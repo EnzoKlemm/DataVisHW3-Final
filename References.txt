@@ -1,0 +1,5 @@
+Thank you Nishaan Amin for the kaggle dataset https://www.kaggle.com/datasets/nishaanamin/march-madness-data/code
+
+Thank you Observable for D3 and implementation https://observablehq.com/@d3/gallery?utm_source=d3js-org&utm_medium=hero&utm_campaign=try-observable
+
+Thank you Anthropic for Claude Code AI - This was used for HTML formatting, D3 implementation issues, and Data formatting
